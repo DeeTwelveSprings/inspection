@@ -1,0 +1,71 @@
+
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">Inspectors</a></li>
+    <li class="breadcrumb-item active" aria-current="page">List</li>
+  </ol>
+</nav>
+
+
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+              <h4 class="card-title mb-3 mb-md-0">List of all Inspectors</h4>
+            </div>
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+              <button type="button" routerLink="/inspectors/add" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                Add Inspector
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <!--<h6 class="card-title">Data Table</h6>-->
+          <div class="table-responsive">
+            <table id="dataTableExample" class="table table-striped-new">
+              <thead>
+                <tr>
+                  <th>Inspector Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr  *ngFor="let fac of inspectorData">
+                  <td>{{fac.firstName}} {{fac.lastName}}</td>
+                  <td>{{fac.address}}</td>
+                  <td>{{fac.phone}}</td>
+                  <td>{{fac.status}}</td>
+                  <td>{{fac.createdDate}}</td>
+                  <td><a [routerLink]="['/inspectors/edit/',fac.id]"><i data-feather="edit-2" appFeatherIcon></i></a></td>
+                </tr>-->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

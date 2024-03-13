@@ -1,0 +1,196 @@
+<div class="main-wrapper">
+
+  <!-- partial:sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- partial -->
+
+  <div class="page-wrapper">
+
+    <!-- partial:navbar -->
+    <app-navbar></app-navbar>
+    <!-- partial -->
+
+    <div class="page-content">
+
+      <!-- Spinner for lazyload modules -->
+      <div *ngIf="isLoading" class="spinner-wrapper">
+        <div class="spinner">Loading...</div>
+      </div>
+
+      <div contentAnimate *ngIf="!isLoading">
+        <router-outlet></router-outlet>
+      </div>
+
+    </div>
+
+    <!-- partial:footer -->
+    <app-footer></app-footer>
+    <!-- partial -->
+
+  </div>
+
+
+</div>
+
+
+<div id="contextMenu" style="display: none;">
+  <div ngbDropdown placement="end-top" class="btn-group show dropdown">
+    <div ngbDropdownMenu class="dropdown-menu" style="display: block;" aria-labelledby="dropdown430">
+      <button (click)="workorder($event)" id="workorder" class="dropdown-item">Go to Work Order</button>
+      <button (click)="reassign()" class="dropdown-item">Swap</button>
+      <button (click)="reschedule()" class="dropdown-item">Move</button>
+      <button (click)="openModal()" class="dropdown-item">Cancel Booking</button>
+      <button (click)="closewindow($event)" class="dropdown-item">Close window</button>
+  </div></div>
+</div>
+
+<div id="contextMenuOff" style="display: none;">
+  <div ngbDropdown placement="end-top" class="btn-group show dropdown">
+    <div ngbDropdownMenu class="dropdown-menu" style="display: block;" aria-labelledby="dropdown431">
+      <button (click)="deleteBlockOff($event)" class="dropdown-item">Delete</button>
+      <button (click)="closewindowOff($event)" class="dropdown-item">Close window</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #deleteModal11 let-modal>
+    
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Cancel Booking</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <p style="text-align: center;">Are you sure you want to cancel this Booking?</p>
+    </div>
+    
+    <div class="modal-footer" style="border: none; display: block; text-align: center;">
+      <button type="button" class="btn btn-secondary" (click)="closePopup()">No</button>
+      <button type="button" class="btn btn-primary" (click)="cancelBooking(cancelId)">Yes</button>
+    </div>
+  </div>
+
+</ng-template>
+
+
+<ng-template #basicModal11 let-modal>
+  <form [formGroup]="formGroup">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">{{reassignTitle}}</h5>  <!-- Reschedule Booking /  -->
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <!--<div class="row">
+        <div class="input-group">
+          <select formControlName="type" [(ngModel)]="item.type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" class="form-select">
+            <option [ngValue]="undefined" selected>-- Select --</option>
+            <option  value="Reschedule">Reschedule Booking</option>
+            <option  value="Reassign">Reassign Inspector</option>
+          </select>
+          <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+            <div *ngIf="f.type.errors.required">Type is required</div>
+          </div>
+        </div>
+      </div>-->
+      <div class="row" *ngIf="item.type == 'Reassign'"> <!-- *ngIf="item.type == 'Reassign'" -->
+        <div class="input-group">
+          <select formControlName="inspectorId"  [(ngModel)]="item.inspectorId" [ngClass]="{ 'is-invalid': submitted && f.inspectorId.errors }" class="form-select">
+            <option [ngValue]="undefined" selected>-- Select --</option>
+            <option *ngFor="let data of inspectorData" [value]="data.inspector_id">{{data.inspectorFirstName}}</option>
+          </select>
+          <div *ngIf="submitted && f.inspectorId.errors" class="invalid-feedback">
+            <div *ngIf="f.inspectorId.errors.required">Inspector is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="item.type == 'Reschedule'">
+        <div class="input-group" style="margin-bottom: 20px;">
+          <input type="text" formControlName="inspectionNewDate" [minDate]="minDate" (dateSelect)="changeDate($event)" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="inspectionNewDate" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewDate.errors }" class="form-control" placeholder="Enter Date">
+          <button class="input-group-text" type="button" (click)="d1.toggle()">
+            <i class="feather icon-calendar icon-md text-muted"></i>
+          </button>
+          <div *ngIf="submitted && f.inspectionNewDate.errors" class="invalid-feedback">
+            <div *ngIf="f.inspectionNewDate.errors.required">Inspection Date is required</div>
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom: 20px;">
+          <select formControlName="inspectionNewTime" [(ngModel)]="item.inspectionNewTime" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewTime.errors }" class="form-select">
+            <option [ngValue]="undefined" selected>-- Select Inspection Time--</option>
+            <option value="08:00:00">8 am</option>
+            <option value="08:30:00">8:30 am</option>
+            <option value="09:00:00">9 am</option>
+            <option value="09:30:00">9:30 am</option>
+            <option value="10:00:00">10 am</option>
+            <option value="10:30:00">10:30 am</option>
+            <option value="11:00:00">11 am</option>
+            <option value="11:30:00">11:30 am</option>
+            <option value="12:00:00">12 pm</option>
+            <option value="12:30:00">12:30 pm</option>
+            <option value="13:00:00">01 pm</option>
+            <option value="13:30:00">01:30 pm</option>
+            <option value="14:00:00">02 pm</option>
+            <option value="14:30:00">02:30 pm</option>
+            <option value="15:00:00">03 pm</option>
+            <option value="15:30:00">03:30 pm</option>
+            <option value="16:00:00">04 pm</option>
+            <option value="16:30:00">04:30 pm</option>
+            <option value="17:00:00">05 pm</option>
+            <option value="17:30:00">05:30 pm</option>
+            <option value="18:00:00">06 pm</option>
+            <option value="18:30:00">06:30 pm</option>
+            <option value="19:00:00">07 pm</option>
+            <option value="19:30:00">07:30 pm</option>
+            <option value="20:00:00">08 pm</option>
+          </select>
+          <div *ngIf="submitted && f.inspectionNewTime.errors" class="invalid-feedback">
+            <div *ngIf="f.inspectionNewTime.errors.required">Inspection Time is required</div>
+          </div>
+        </div>
+        <div class="input-group">  
+          <select formControlName="inspectionNewDuration"  (change)="changeDurationNew($event)" [(ngModel)]="item.inspectionNewDuration" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewDuration.errors }" class="form-select">
+              <option [ngValue]="undefined" selected>-- Select Duration --</option>
+              <option value="1:0">1 Hour</option>
+              <option value="1:30">1.5 Hour</option>
+              <option value="2:0">2 Hour</option>
+              <option value="2:30">2.5 Hour</option>
+              <option value="3:0">3 Hour</option>
+              <option value="3:30">3.5 Hour</option>
+              <option value="4:0">4 Hour</option>
+              <option value="4:30">4.5 Hour</option>
+              <option value="5:0">5 Hour</option>
+          </select>
+          <div *ngIf="submitted && f.inspectionNewDuration.errors" class="invalid-feedback">
+            <div *ngIf="f.inspectionNewDuration.errors.required">Duration is required</div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closePopup()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="reassignSave($event)">Save changes</button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+
+
+<ng-template #basicModalBlock let-modal>
+    
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <p style="text-align: center;">Are you sure you want to delete block slot?</p>
+    </div>
+    
+    <div class="modal-footer" style="border: none; display: block; text-align: center;">
+      <button type="button" class="btn btn-secondary" (click)="closePopupBlock()">No</button>
+      <button type="button" class="btn btn-primary" (click)="deleteSlotDe(deleteId)">Yes</button>
+    </div>
+  </div>
+
+</ng-template>

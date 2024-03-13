@@ -1,0 +1,97 @@
+<div class="row w-100 mx-0 auth-page">
+  <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-4 pe-md-0">
+          <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(assets/images/others/hvac-cover.jpg)' }">
+
+          </div>
+          
+        </div>
+        <div class="col-md-8 ps-md-0">
+          <div class="auth-form-wrapper px-4 py-5">
+            <a routerLink="." class="nobleui-logo d-block mb-2"><img src="assets/images/others/Logo.png" /></a>
+            <h5 class="text-muted fw-normal mb-4">Create Account</h5>
+            
+            <!--<alert></alert>-->
+
+            <form class="forms-sample" [formGroup]="formGroup">
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" formControlName="firstName" class="form-control" id="firstName" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                  <div *ngIf="f.firstName.errors.required">First name is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                  <div *ngIf="f.lastName.errors.required">Last name is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="jobRole" class="form-label">Job Role</label>
+                <input type="text" formControlName="jobRole" class="form-control" id="jobRole" placeholder="Job Role" [ngClass]="{ 'is-invalid': submitted && f.jobRole.errors }">
+                <div *ngIf="submitted && f.jobRole.errors" class="invalid-feedback">
+                  <div *ngIf="f.jobRole.errors.required">Job Role is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" formControlName="phoneNumber" mask="(000) 000-0000" class="form-control" id="phoneNumber" placeholder="Phone Number" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }">
+                <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+                  <div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="userId" class="form-label">User ID</label>
+                <input type="text" formControlName="userId" class="form-control" id="userId" placeholder="User ID" [ngClass]="{ 'is-invalid': submitted && f.userId.errors }">
+                <div *ngIf="submitted && f.userId.errors" class="invalid-feedback">
+                  <div *ngIf="f.userId.errors.required">User ID is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email"  formControlName="email" class="form-control" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">Email is required</div>
+                  <div *ngIf="f.email.errors.email">Enter Valid Email</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" formControlName="password" class="form-control" id="password" autocomplete="current-password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password">
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                  <div *ngIf="f.password.errors.required">Password is required</div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword" autocomplete="current-password" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" placeholder="Confirm Password">
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                  <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                  <div *ngIf="f.confirmPassword.errors.confirmedValidator">Password and Confirm password didn't match. </div>
+                </div>
+              </div>
+              <!--<div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="authCheck">
+                <label class="form-check-label" for="authCheck">
+                  Remember me
+                </label>
+              </div>-->
+              <div>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onRegister($event)">Sign up</button>
+                <!--<button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                  <i class="feather icon-twitter btn-icon-prepend"></i>
+                  Sign up with twitter
+                </button>-->
+              </div>
+              <a routerLink="/auth/login" class="d-block mt-3 text-muted">Already a user? Sign in</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

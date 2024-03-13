@@ -1,0 +1,30 @@
+.card-body p{padding-bottom: 20px;}
+.agreebox{border:1px solid #ccc; padding: 20px; text-align: center;}
+.printbut{
+    background: #1C315F;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#htmlData p{font-size:18px;}
+#invoiceData p{font-size:18px;}
+.my-modal-popup {width:70%;}
+@media print {
+    body * {
+      display: none;
+    }
+    .no-printme{
+        display: none;
+    }
+    .navbar{display: none;}
+    .page-breadcrumb{display: none;}
+    .printme {
+        
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0px;
+    }
+    
+}

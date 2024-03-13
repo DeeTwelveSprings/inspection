@@ -1,0 +1,39 @@
+.partsection{border:2px solid #ccc; padding: 10px; cursor: pointer;}
+.mainbox{border: 2px solid #ccc;}
+.bigsection{padding: 10px;}
+.maintitle{margin-bottom: 15px;}
+.boxtitle{font-weight: bold;margin-bottom: 5px;}
+
+
+.mainlab{font-size: 16px; margin-bottom: 10px; width: 100%;}
+.user-input .time-sloat label {
+    display: block;
+    padding: 10px;
+    border-radius: 10px;
+    background: #e1e9f1;
+    color: #223461;
+    border: none;
+    text-align: center;
+    font-size: 15px;
+}
+
+.user-input .time-sloat {
+    display: inline-block;
+    width: 20%;
+    margin: 15px 10px;
+}
+.user-input .time-sloat.active label {
+    background: #223461;
+    color: #fff;
+    border: solid 1px #223461;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+.chkbox{padding: 0px;}
+.chkbox li{display: inline; padding-left: 10px;}
+.primaryBox{border:3px solid #cacce6; padding: 15px; background-color:#e0e3ff ;}
+.secondaryBox{margin-top:0px;border:3px solid #cadddd; padding: 10px 10px 0px 10px; background-color:#e0f6f6 ;}
+.trasactionBox{margin-top:10px; margin-bottom: 5px; border:3px solid #e5dab9; padding: 10px 10px 0px 10px; background-color:#fef2cd ;}
+.inspectorAlert{color:red;}

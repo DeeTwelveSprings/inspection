@@ -1,0 +1,136 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/inspectors">Block Inspector Slot</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{addUpdateLabel}}</li>
+    </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <!--<h6 class="card-title">Form Grid</h6>-->
+        
+        <form [formGroup]="formGroup">
+          <div class="row">
+            <div class="col-sm-6">
+                <label class="form-label">Start Date <span style="color:red;">*</span></label>
+              <div class="mb-3 input-group">
+                
+                <input type="text" formControlName="startDate"  (dateSelect)="changeDate($event)" [minDate]="minDate" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="selectedDate" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }" class="form-control" placeholder="Enter Start Date">
+                <button class="input-group-text" type="button" (click)="d.toggle()">
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                </button>
+                <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                  <div *ngIf="f.startDate.errors.required">Start Date is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">End Date <span style="color:red;">*</span></label>
+                <div class="mb-3 input-group">
+                  
+                  <input type="text" formControlName="endDate" (dateSelect)="changeEndDate($event)" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="endDate" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }" class="form-control" placeholder="Enter End Date">
+                  <button class="input-group-text" type="button" (click)="d1.toggle()">
+                    <i class="feather icon-calendar icon-md text-muted"></i>
+                </button>
+                  <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+                    <div *ngIf="f.endDate.errors.required">End Date is required</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <label class="form-label">Block Slot <span style="color:red;">*</span></label>
+              <div class="mb-3">
+                <select formControlName="type" (change)="changeStartTime($event)" [(ngModel)]="blockType" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" class="form-select">
+                  <option [ngValue]="undefined" selected>-- Select --</option>
+                  <option value="All Day">All Day</option>
+                  <option value="09:00:00">09:00 am</option>
+                  <option value="14:00:00">02:00 pm</option>
+                </select>
+                <!--<ngb-timepicker formControlName="startTime" (ngModelChange)="startTimeChange($event)" [ngClass]="{ 'is-invalid': submitted && f.startTime.errors }" class="form-control" [(ngModel)]="selStartTime"></ngb-timepicker>-->
+                <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                  <div *ngIf="f.type.errors.required">Start Time is required</div>
+                </div>
+              </div>
+            </div>
+            <!--<div class="col-sm-6">
+              <label class="form-label">End Time <span style="color:red;">*</span></label>
+              <div class=" mb-3">
+                <ngb-timepicker formControlName="endTime" (ngModelChange)="endTimeChange($event)" [ngClass]="{ 'is-invalid': submitted && f.endTime.errors }" class="form-control" [(ngModel)]="selEndTime"></ngb-timepicker>
+                <div *ngIf="submitted && f.endTime.errors" class="invalid-feedback">
+                  <div *ngIf="f.endTime.errors.required">End Time is required</div>
+                </div>
+              </div>
+            </div>-->
+          </div>
+
+          <button type="button" class="btn btn-success submit" (click)="save($event)">{{saveLabel}}</button>
+        </form>  
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive" (click)="deleteSlot($event)">
+            <table id="dataTableExample" class="table table-striped-new">
+              <thead>
+                <tr>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <!--<th>Action</th>-->
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr *ngFor="let data of savedData">
+                  <td>{{data.startDate}}</td>
+                  <td>End Date</td>
+                  <td>Start Time</td>
+                  <td>End Time</td>
+                  <td>dasdAction</td>
+                </tr>-->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #basicModal let-modal>
+    
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <p style="text-align: center;">Are you sure you want to delete block slot?</p>
+        </div>
+        
+        <div class="modal-footer" style="border: none; display: block; text-align: center;">
+          <button type="button" class="btn btn-secondary" (click)="closePopup()">No</button>
+          <button type="button" class="btn btn-primary" (click)="deleteSlotDe(deleteId)">Yes</button>
+        </div>
+      </div>
+    
+  </ng-template>

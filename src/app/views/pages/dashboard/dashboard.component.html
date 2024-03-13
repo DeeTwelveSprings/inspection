@@ -1,0 +1,213 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">Welcome to Dashboard</h4>
+  </div>
+  <!--<div class="d-flex align-items-center flex-wrap text-nowrap">
+    <div class="input-group wd-200 me-2 mb-2 mb-md-0">
+      <button class="btn btn-outline-primary btn-icon calendar" type="button" (click)="d.toggle()">
+        <i data-feather="calendar" appFeatherIcon></i>
+      </button>
+      <input class="form-control border-primary bg-transparent" placeholder="yyyy-mm-dd"
+          name="dp" [(ngModel)]="currentDate" ngbDatepicker #d="ngbDatepicker">
+    </div>
+    <button type="button" class="btn btn-outline-primary btn-icon-text me-2 mb-2 mb-md-0">
+      <i class="btn-icon-prepend" data-feather="printer" appFeatherIcon></i>
+      Print
+    </button>
+    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+      <i class="btn-icon-prepend" data-feather="download-cloud" appFeatherIcon></i>
+      Download Report
+    </button>
+  </div>-->
+</div>
+<div class="row">
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-4 grid-margin">
+        <div class="row" style="width: 100%;">
+          <div class="col-xl-12" style="margin-bottom: 20px;">
+            <button type="button"  (click)="gotoMonth()" style="background-color: purple; color:#fff; border-color: #fff;" class="btn btn-primary mb-1 mb-md-0">Month</button>
+            <button type="button" (click)="openMap()" style="background-color: skyblue; color:#fff; border-color: #fff;"class="btn btn-primary mb-1 mb-md-0">Map</button>
+            <button type="button" (click)="gotoWeek()" style="background-color: orangered; color:#fff; border-color: #fff;" class="btn btn-primary mb-1 mb-md-0">Week</button>
+          </div>
+          <div class="col-xl-12" style="margin-bottom: 10px;">
+            <div class="row">
+            <div class="col-6 col-xl-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-baseline" style="margin-bottom: 15px;">
+                    <h6 class="mb-0">Work orders for the week</h6>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-md-12 col-xl-5">
+                      <h3 class="mb-2">{{workorderWeek}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-baseline" style="margin-bottom: 15px;">
+                    <h6 class="mb-0">Available slots for the week</h6>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-md-12 col-xl-5">
+                      <h3 class="mb-2">{{availableslots}}</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <!--<div class="chart-wrapper">
+                <canvas baseChart
+                      [type]="'bar'"
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [options]="chartOptions"
+                >
+              </canvas>
+            </div>-->
+            
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-6 col-xl-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline" style="margin-bottom: 15px;">
+                      <h6 class="mb-0">Work orders booked today</h6>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 col-md-12 col-xl-5">
+                        <h3 class="mb-2">{{workorderToday}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-xl-6">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-baseline" style="margin-bottom: 15px;">
+                      <h6 class="mb-0">Total Inspections for today</h6>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 col-md-12 col-xl-5">
+                        <h3 class="mb-2">{{todayBooking}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+        
+        <!--<span>Work orders booked today: </span><br />
+        <span>Inspection for today: <b>{{todayBooking}}</b></span>-->
+      </div>
+      <div class="col-md-8 grid-margin stretch-card">
+        <ngb-datepicker #dp [(ngModel)]="currentDate" (dateSelect)="onDateSelection($event)" [displayMonths]="3" outsideDays="hidden">
+        </ngb-datepicker>
+      </div>
+    </div>
+  </div>
+<!--<div class="row">
+  <div class="col-12 col-xl-12 stretch-card">
+    <div class="row flex-grow-1">
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0">Inspectors</h6>
+              <div ngbDropdown class="mb-2">
+                <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button" id="dropdownMenuButton">
+                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton">
+                  <a ngbDropdownItem class="d-flex align-items-center" [routerLink]="['/inspectors']" (click)="false"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{totalInspector}}</h3>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0">Inspection Bookings</h6>
+              <div ngbDropdown class="mb-2">
+                <button ngbDropdownToggle class="btn p-0 no-dropdown-toggle-icon" type="button" id="dropdownMenuButton1">
+                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal" appFeatherIcon></i>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                  <a ngbDropdownItem class="d-flex align-items-center" [routerLink]="['/bookings']" (click)="false"><i data-feather="eye" appFeatherIcon class="icon-sm me-2"></i> <span class="">View</span></a>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 col-md-12 col-xl-5">
+                <h3 class="mb-2">{{totalBookings}}</h3>
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+<div class="row">
+  <div class="demo-app-main">
+    <full-calendar #fc [options]="calendarOptions"></full-calendar>
+  </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Map</h5>  <!-- Reschedule Booking /  -->
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <google-map height="500px"
+          width="760px"
+          [center]="center"
+          [zoom]="zoom"
+          (mapClick)="moveMap($event)"
+          (mapMousemove)="move($event)">
+          <map-marker
+  *ngFor="let marker of mapMarkers"
+  [position]="marker.position"
+  [label]="marker.label"
+  [title]="marker.title"
+  [options]="marker.options">
+</map-marker>
+</google-map>
+    </div>
+    <div class="row" style="margin-top:15px;">
+      <div class="col-12">
+      <div *ngFor="let bookinfo of bookingData; let i = index">
+        <div class="col-md-6 addressText">{{i+1}}) {{bookinfo.address}}</div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>

@@ -1,0 +1,637 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/bookings">Bookings</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add</li>
+    </ol>
+</nav>
+
+
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <!--<h6 class="card-title">Form Grid</h6>-->
+
+                <div class="example">
+                    <ul ngbNav #defaultNav="ngbNav" [(activeId)]="defaultNavActiveId" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>Booking Information</a>
+                            <ng-template ngbNavContent>
+                                <form [formGroup]="formGroup">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Address <span style="color:red;">*</span></label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text"><i class="feather icon-home"></i></span>
+                                                <input type="text" formControlName="address" [(ngModel)]="item.address" [options]="options" ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" class="form-control" placeholder="Enter Address">
+                                                <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                <div *ngIf="f.address.errors.required">Address is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="item.paymentStatus == 'PENDING' && !saveButton">
+                                            <b>Payment URL :</b> {{paymentUrl}} &nbsp;&nbsp; <button style="background: #1C315F; border:none;" type="button" class="btn btn-success" (click)="copyURL();">Copy URL</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="mb-3">
+                                            <label class="form-label">Unit </label>
+                                            <input type="text" formControlName="unit" [(ngModel)]="item.unit" [ngClass]="{ 'is-invalid': submitted && f.unit.errors }" class="form-control" placeholder="Enter Unit">
+                                            <div *ngIf="submitted && f.unit.errors" class="invalid-feedback">
+                                                <div *ngIf="f.unit.errors.required">Unit is required</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="mb-3">
+                                                <label class="form-label">City <span style="color:red;">*</span></label>
+                                                <input type="text" formControlName="city" [(ngModel)]="item.city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" class="form-control" placeholder="Enter City">
+                                                <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                                <div *ngIf="f.city.errors.required">City is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="mb-3">
+                                                <label class="form-label">State <span style="color:red;">*</span></label>
+                                                <input type="text" formControlName="state" [(ngModel)]="item.state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" class="form-control" placeholder="Enter State">
+                                                <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                                <div *ngIf="f.state.errors.required">State is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="mb-3">
+                                                <label class="form-label">Zipcode <span style="color:red;">*</span></label>
+                                                <input type="text" formControlName="zipcode" [(ngModel)]="item.zipcode" maxlength="5" minlength="5" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" class="form-control" placeholder="Enter Zipcode">
+                                                <div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
+                                                <div *ngIf="f.zipcode.errors.required">Zipcode is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                            <label class="form-label">Square Footage <span style="color:red;">*</span></label>
+                                            <input type="text" formControlName="squarefeet" [(ngModel)]="item.squareFeet" maxlength="10" [ngClass]="{ 'is-invalid': submitted && f.squarefeet.errors }" class="form-control" placeholder="Enter Square Footage">
+                                            <div *ngIf="submitted && f.squarefeet.errors" class="invalid-feedback">
+                                                <div *ngIf="f.squarefeet.errors.required">Square Footage is required</div>
+                                                <div *ngIf="f.squarefeet.errors.pattern">Enter only number.</div>
+                                                <div *ngIf="f.squarefeet.errors.max">Maximum 6000 Squarefeet</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Year Built <span style="color:red;">*</span></label>
+                                                <input type="text" formControlName="yearbuilt" [(ngModel)]="item.yearBuilt" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f.yearbuilt.errors }" class="form-control" placeholder="Enter Built Year">
+                                                <div *ngIf="submitted && f.yearbuilt.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.yearbuilt.errors.required">Year Built is required</div>
+                                                    <div *ngIf="f.yearbuilt.errors.pattern">Enter only number.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Foundation Slab Option</label>
+                                                <select formControlName="foundation"  [(ngModel)]="item.foundation" [ngClass]="{ 'is-invalid': submitted && f.foundation.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="Basement">Basement</option>
+                                                    <option value="Slab">Slab</option>
+                                                    <option value="Crawlspace">Crawlspace</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.foundation.errors" class="invalid-feedback">
+                                                <div *ngIf="f.foundation.errors.required">Foundation Slab is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Reason For Inspection <span style="color:red;">*</span></label>
+                                                <select formControlName="inspectiontype" (change)="changeInspc($event)" [(ngModel)]="item.inspectionType" [ngClass]="{ 'is-invalid': submitted && f.inspectiontype.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="New Construction">New Construction</option>
+                                                    <option value="Builder warranty Inspection">Builder warranty Inspection</option>
+                                                    <option value="Buyer">Buyer</option>
+                                                    <option value="Phased">Phased</option>
+                                                    <option value="Seller Inspection">Seller Inspection</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.inspectiontype.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.inspectiontype.errors.required">Inspection Type is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4" *ngIf="subPackage">
+                                            <div class="mb-3">
+                                                <label class="form-label">Phase</label>
+                                                <select formControlName="inspectionSubType" [(ngModel)]="item.inspectionSubType" [ngClass]="{ 'is-invalid': submitted && f.inspectionSubType.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="First Phase Slab Inspection">First Phase Slab Inspection</option>
+                                                    <option value="Second Phase/ Pre Dry wall Inspection">Second Phase/ Pre Dry wall Inspection</option>
+                                                    <option value="Final Phase Full Inspection">Final Phase Full Inspection</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.inspectionSubType.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.inspectionSubType.errors.required">Phase is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="primaryBox">
+                                        <label class="mainlab"><b>Primary Contact</b></label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">First Name <span style="color:red;">*</span></label>
+                                                    <input type="text" formControlName="firstname" [(ngModel)]="item.firstName" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" class="form-control" placeholder="Enter First name">
+                                                    <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.firstname.errors.required">First Name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Last Name <span style="color:red;">*</span></label>
+                                                    <input type="text" formControlName="lastname" [(ngModel)]="item.lastName" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" class="form-control" placeholder="Enter Last Name">
+                                                    <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Email <span style="color:red;">*</span></label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                                    <input type="text" formControlName="email" [(ngModel)]="item.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" placeholder="Enter Email">
+                                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.email.errors.required">Email is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">CC Email </label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                                    <input type="text" formControlName="ccemail" [(ngModel)]="item.ccEmail" [ngClass]="{ 'is-invalid': submitted && f.ccemail.errors }" class="form-control" placeholder="Enter CC Email">
+                                                    <div *ngIf="submitted && f.ccemail.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.ccemail.errors.required">CC Email is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Phone <span style="color:red;">*</span></label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                                    <input type="text" formControlName="phone" mask="(000) 000-0000" [(ngModel)]="item.phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" class="form-control" placeholder="Enter Phone Number">
+                                                    <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.phone.errors.required">Phone is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="secondaryBox">
+                                        <label class="mainlab"><input type="checkbox" class="form-check-input" [checked]="secondaryOn == true" (click)="secondary_check($event)" style="margin-right: 15px;" /><b>Secondary Contact</b></label>
+                                        <div class="row" *ngIf="secondaryOn">
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Secondary Full Name </label>
+                                                    <input type="text" formControlName="secondaryfullname" [(ngModel)]="item.secondaryFullName" class="form-control" placeholder="Enter Seondary Full Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Secondary Phone </label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                                    <input type="text" formControlName="secondaryPhone" mask="(000) 000-0000" [(ngModel)]="item.secondaryPhone" class="form-control" placeholder="Enter Seondary Phone Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Secondary Email </label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                                    <input type="text" formControlName="secondaryEmail" [(ngModel)]="item.secondaryEmail" class="form-control" placeholder="Enter Seondary Email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="trasactionBox">
+                                        <label class="mainlab"><input type="checkbox" class="form-check-input" [checked]="transsectionOn == true" (click)="trans_check($event)" style="margin-right: 15px;" /><b>Transaction Coordinator</b></label>
+                                        <div class="row" *ngIf="transsectionOn">
+                                            <div class="col-sm-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Transaction Coordinator Name</label>
+                                                    <input type="text" formControlName="trans_full_name" [(ngModel)]="item.transFullName" [ngClass]="{ 'is-invalid': submitted && f.trans_full_name.errors }" class="form-control" placeholder="Enter Name">
+                                                    <div *ngIf="submitted && f.trans_full_name.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.trans_full_name.errors.required">First Name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Transaction Coordinator Phone</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                                    <input type="text" formControlName="trans_phone" mask="(000) 000-0000"  [(ngModel)]="item.transPhone" [ngClass]="{ 'is-invalid': submitted && f.trans_phone.errors }" class="form-control" placeholder="Enter Phone">
+                                                    <div *ngIf="submitted && f.trans_phone.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.trans_phone.errors.required">First Name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label">Transaction Coordinator Email</label>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                                    <input type="text" formControlName="trans_email" [(ngModel)]="item.transEmail" [ngClass]="{ 'is-invalid': submitted && f.trans_email.errors }" class="form-control" placeholder="Enter Email">
+                                                    <div *ngIf="submitted && f.trans_email.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.trans_email.errors.required">First Name is required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Agent Name </label>
+                                                <input type="text" formControlName="agentname" (ngModelChange)="selectAgent($event)" [inputFormatter]="formatter" [resultTemplate]="rt1" [ngbTypeahead]="filtersearch" [(ngModel)]="invName" class="form-control" placeholder="Enter Agent Name">
+                                            </div>
+                                            <ng-template #rt1 let-r="result" let-t="term">
+                                                <ngb-highlight [result]="r.name" [term]="t">
+                                                </ngb-highlight>
+                                            </ng-template>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Agent Email </label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                                <input type="text" formControlName="agentemail" [(ngModel)]="item.agentEmail" [ngClass]="{ 'is-invalid': submitted && f.agentemail.errors }" class="form-control" placeholder="Enter Agent Email">
+                                                <div *ngIf="submitted && f.agentemail.errors" class="invalid-feedback">
+                                                <div *ngIf="f.agentemail.errors.required">CC Email is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Agent Phone </label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                                <input type="text" formControlName="agentphone" [(ngModel)]="item.agentPhone" mask="(000) 000-0000" [ngClass]="{ 'is-invalid': submitted && f.agentphone.errors }" class="form-control" placeholder="Enter Agent Phone">
+                                                <div *ngIf="submitted && f.agentphone.errors" class="invalid-feedback">
+                                                <div *ngIf="f.agentphone.errors.required">Phone is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Inspection Date <span style="color:red;">*</span></label>
+                                                <span style="display: block">
+                                                
+                                                <ngb-datepicker [minDate]="minDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="inspectionDate" (dateSelect)="changeDate($event)"></ngb-datepicker>
+                                                </span>
+                                                <!--<input type="text" formControlName="inspectiondate" [ngClass]="{ 'is-invalid': submitted && f.inspectiondate.errors }" class="form-control" placeholder="Enter Date">
+                                                <div *ngIf="submitted && f.inspectiondate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.inspectiondate.errors.required">Inspection Date is required</div>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Inspection Time <span style="color:red;">*</span></label>
+                                                <div class="user-input secound-radio">
+                                                    <div class="time-sloat" *ngIf="i1">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" id="i1" value="09:00:00"> 9:00 am</label>
+                                                    </div>
+                                                    <!--<div class="time-sloat" *ngIf="i2">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="10:00:00"> 10:00 am</label>
+                                                    </div>
+                                                    <div class="time-sloat" *ngIf="i3">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="11:00:00"> 11:00 am</label>
+                                                    </div> 
+                                                    <div class="time-sloat"  *ngIf="i4">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="12:00:00"> 12:00 pm</label>
+                                                    </div>
+                                                    <div class="time-sloat" *ngIf="i5">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="13:00:00"> 1:00 pm</label>
+                                                    </div>-->
+                                                    <div class="time-sloat" *ngIf="i6">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="14:00:00"> 2:00 pm</label>
+                                                    </div>
+                                                    <!--<div class="time-sloat" *ngIf="i7">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="15:00:00"> 3:00 pm</label>
+                                                    </div>
+                                                    <div class="time-sloat" *ngIf="i8">
+                                                        <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="16:00:00"> 4:00 pm</label>
+                                                    </div>-->
+                                                </div>
+                                                <div>
+                                                    <div style="font-size: 0.875em; color: #ff3366;" *ngIf="submitted && f.inspectiontime.errors?.required">Inspection Time is required</div>
+                                                </div>
+                                                <div style="color:red" *ngIf="slotBooked">All slots are booked</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Inspector Name :</label>
+                                                <span>&nbsp;&nbsp;<b [ngClass]="ontheflyInspectorID == 0 ? 'inspectorAlert' : ''">{{showInspectorName}}</b></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Package <span style="color:red;">*</span></label>
+                                                <select formControlName="packagename" (change)="packageChange($event)" [(ngModel)]="item.packageName" [ngClass]="{ 'is-invalid': submitted && f.packagename.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="Total Solutions Bundle">Total Solutions Bundle</option>
+                                                    <option *ngIf="showpckg" value="The Top 5 Bundle">The Top 5 Bundle</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.packagename.errors" class="invalid-feedback">
+                                                <div *ngIf="f.packagename.errors.required">Package is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Review <span style="color:red;">*</span></label>
+                                                <select formControlName="reportreview" [(ngModel)]="item.reportreView" [ngClass]="{ 'is-invalid': submitted && f.reportreview.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="In Person Day of Inspection"> In Person Day of Inspection (last 30 minutes of inspection only)</option>
+                                                    <option value="Via Phone/Online">Via Phone/Online (30 minute phone call post inspection)</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.reportreview.errors" class="invalid-feedback">
+                                                <div *ngIf="f.reportreview.errors.required">Report Review is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Timezone <span style="color:red;">*</span></label>
+                                                <select formControlName="timeZone" [(ngModel)]="item.timeZone" [ngClass]="{ 'is-invalid': submitted && f.timeZone.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
+                                                    <option value="America/Adak">(GMT-10:00) Hawaii-Aleutian</option>
+                                                    <option value="Etc/GMT+10">(GMT-10:00) Hawaii</option>
+                                                    <option value="Pacific/Marquesas">(GMT-09:30) Marquesas Islands</option>
+                                                    <option value="Pacific/Gambier">(GMT-09:00) Gambier Islands</option>
+                                                    <option value="America/Anchorage">(GMT-09:00) Alaska</option>
+                                                    <option value="America/Ensenada">(GMT-08:00) Tijuana, Baja California</option>
+                                                    <option value="Etc/GMT+8">(GMT-08:00) Pitcairn Islands</option>
+                                                    <option value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
+                                                    <option value="America/Denver">(GMT-07:00) Mountain Time (US & Canada)</option>
+                                                    <option value="America/Chihuahua">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+                                                    <option value="America/Dawson_Creek">(GMT-07:00) Arizona</option>
+                                                    <option value="America/Belize">(GMT-06:00) Saskatchewan, Central America</option>
+                                                    <option value="America/Cancun">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
+                                                    <option value="Chile/EasterIsland">(GMT-06:00) Easter Island</option>
+                                                    <option value="America/Chicago">(GMT-06:00) Central Time (US & Canada)</option>
+                                                    <option value="America/New_York">(GMT-05:00) Eastern Time (US & Canada)</option>
+                                                    <option value="America/Havana">(GMT-05:00) Cuba</option>
+                                                    <option value="America/Bogota">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+                                                    <option value="America/Caracas">(GMT-04:30) Caracas</option>
+                                                    <option value="America/Santiago">(GMT-04:00) Santiago</option>
+                                                    <option value="America/La_Paz">(GMT-04:00) La Paz</option>
+                                                    <option value="Atlantic/Stanley">(GMT-04:00) Faukland Islands</option>
+                                                    <option value="America/Campo_Grande">(GMT-04:00) Brazil</option>
+                                                    <option value="America/Goose_Bay">(GMT-04:00) Atlantic Time (Goose Bay)</option>
+                                                    <option value="America/Glace_Bay">(GMT-04:00) Atlantic Time (Canada)</option>
+                                                    <option value="America/St_Johns">(GMT-03:30) Newfoundland</option>
+                                                    <option value="America/Araguaina">(GMT-03:00) UTC-3</option>
+                                                    <option value="America/Montevideo">(GMT-03:00) Montevideo</option>
+                                                    <option value="America/Miquelon">(GMT-03:00) Miquelon, St. Pierre</option>
+                                                    <option value="America/Godthab">(GMT-03:00) Greenland</option>
+                                                    <option value="America/Argentina/Buenos_Aires">(GMT-03:00) Buenos Aires</option>
+                                                    <option value="America/Sao_Paulo">(GMT-03:00) Brasilia</option>
+                                                    <option value="America/Noronha">(GMT-02:00) Mid-Atlantic</option>
+                                                    <option value="Atlantic/Cape_Verde">(GMT-01:00) Cape Verde Is.</option>
+                                                    <option value="Atlantic/Azores">(GMT-01:00) Azores</option>
+                                                    <option value="Europe/Belfast">(GMT) Greenwich Mean Time : Belfast</option>
+                                                    <option value="Europe/Dublin">(GMT) Greenwich Mean Time : Dublin</option>
+                                                    <option value="Europe/Lisbon">(GMT) Greenwich Mean Time : Lisbon</option>
+                                                    <option value="Europe/London">(GMT) Greenwich Mean Time : London</option>
+                                                    <option value="Africa/Abidjan">(GMT) Monrovia, Reykjavik</option>
+                                                    <option value="Europe/Amsterdam">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+                                                    <option value="Europe/Belgrade">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+                                                    <option value="Europe/Brussels">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+                                                    <option value="Africa/Algiers">(GMT+01:00) West Central Africa</option>
+                                                    <option value="Africa/Windhoek">(GMT+01:00) Windhoek</option>
+                                                    <option value="Asia/Beirut">(GMT+02:00) Beirut</option>
+                                                    <option value="Africa/Cairo">(GMT+02:00) Cairo</option>
+                                                    <option value="Asia/Gaza">(GMT+02:00) Gaza</option>
+                                                    <option value="Africa/Blantyre">(GMT+02:00) Harare, Pretoria</option>
+                                                    <option value="Asia/Jerusalem">(GMT+02:00) Jerusalem</option>
+                                                    <option value="Europe/Minsk">(GMT+02:00) Minsk</option>
+                                                    <option value="Asia/Damascus">(GMT+02:00) Syria</option>
+                                                    <option value="Europe/Moscow">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+                                                    <option value="Africa/Addis_Ababa">(GMT+03:00) Nairobi</option>
+                                                    <option value="Asia/Tehran">(GMT+03:30) Tehran</option>
+                                                    <option value="Asia/Dubai">(GMT+04:00) Abu Dhabi, Muscat</option>
+                                                    <option value="Asia/Yerevan">(GMT+04:00) Yerevan</option>
+                                                    <option value="Asia/Kabul">(GMT+04:30) Kabul</option>
+                                                    <option value="Asia/Yekaterinburg">(GMT+05:00) Ekaterinburg</option>
+                                                    <option value="Asia/Tashkent">(GMT+05:00) Tashkent</option>
+                                                    <option value="Asia/Calcutta">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                                                    <option value="Asia/Katmandu">(GMT+05:45) Kathmandu</option>
+                                                    <option value="Asia/Dhaka">(GMT+06:00) Astana, Dhaka</option>
+                                                    <option value="Asia/Novosibirsk">(GMT+06:00) Novosibirsk</option>
+                                                    <option value="Asia/Rangoon">(GMT+06:30) Yangon (Rangoon)</option>
+                                                    <option value="Asia/Bangkok">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+                                                    <option value="Asia/Krasnoyarsk">(GMT+07:00) Krasnoyarsk</option>
+                                                    <option value="Asia/Hong_Kong">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi</option>
+                                                    <option value="Asia/Irkutsk">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+                                                    <option value="Australia/Perth">(GMT+08:00) Perth</option>
+                                                    <option value="Australia/Eucla">(GMT+08:45) Eucla</option>
+                                                    <option value="Asia/Tokyo">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+                                                    <option value="Asia/Seoul">(GMT+09:00) Seoul</option>
+                                                    <option value="Asia/Yakutsk">(GMT+09:00) Yakutsk</option>
+                                                    <option value="Australia/Adelaide">(GMT+09:30) Adelaide</option>
+                                                    <option value="Australia/Darwin">(GMT+09:30) Darwin</option>
+                                                    <option value="Australia/Brisbane">(GMT+10:00) Brisbane</option>
+                                                    <option value="Australia/Hobart">(GMT+10:00) Hobart</option>
+                                                    <option value="Asia/Vladivostok">(GMT+10:00) Vladivostok</option>
+                                                    <option value="Australia/Lord_Howe">(GMT+10:30) Lord Howe Island</option>
+                                                    <option value="Etc/GMT-11">(GMT+11:00) Solomon Is., New Caledonia</option>
+                                                    <option value="Asia/Magadan">(GMT+11:00) Magadan</option>
+                                                    <option value="Pacific/Norfolk">(GMT+11:30) Norfolk Island</option>
+                                                    <option value="Asia/Anadyr">(GMT+12:00) Anadyr, Kamchatka</option>
+                                                    <option value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
+                                                    <option value="Etc/GMT-12">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+                                                    <option value="Pacific/Chatham">(GMT+12:45) Chatham Islands</option>
+                                                    <option value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
+                                                    <option value="Pacific/Kiritimati">(GMT+14:00) Kiritimati</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.timeZone.errors" class="invalid-feedback">
+                                                <div *ngIf="f.timeZone.errors.required">Timezone is required</div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="mb-3">
+                                                <label class="form-label" style="width:100%">Select Ancillary Services </label>
+                                                <div class="row" *ngIf="item.additionalServices">
+                                                    <ul>
+                                                        <li *ngFor="let p of servicesArr">
+                                                            {{p}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="row" style="padding-bottom: 5px;" *ngIf="servicesArr.length == 0">
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Swimming Pool/Hot Tub">&nbsp;Swimming Pool/Hot Tub - $100
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices"  value="225" data-id="Septic">&nbsp;Septic - $225
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Storage/Shed w/out Utilities">&nbsp;Storage/Shed w/out Utilities - $100
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Storage/Shed with Utilities">&nbsp;Storage/Shed withUtilities - $100
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="row" style="padding: 5px 0px;" *ngIf="servicesArr.length == 0">
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Barn w/out Utilities">&nbsp;Barn w/out Utilities - $100
+                                                        
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="50" data-id="Outdoor Kitchen Appliances">&nbsp;Outdoor Kitchen Appliances - $50
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="250" data-id="Guest House">&nbsp;Guest House - $250
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Workshop with Utilities">&nbsp;Workshop with Utilities - $100
+                                                    </div>
+                        
+                                                </div>
+                                                <div class="row" style="padding: 5px 0px;" *ngIf="servicesArr.length == 0">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 grid-margin stretch-card">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">Checkout Summary</h6>
+                                                    <div class="table-responsive pt-3">
+                                                        <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Service Cost</td>
+                                                                <td><b>${{serviceCost | number : '1.2-2'}}</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Additional Services Cost</td>
+                                                                <td><b>${{additionalServicesCost | number : '1.2-2'}}</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Total Amount</td>
+                                                                <td><b><input type="text" formControlName="packagePrice" [(ngModel)]="item.packagePrice" [ngClass]="{ 'is-invalid': submitted && f.packagePrice.errors }" class="form-control">
+                                                                    <div *ngIf="submitted && f.packagePrice.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.packagePrice.errors.required">Final Price is required</div>
+                                                                    </div>
+                                                                    <!--{{finalServiceCost | number : '1.2-2'}} --></b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"><span style="color:rebeccapurple; text-decoration:underline; cursor: pointer;" (click)="calculateFinalPrice('calculate')">Calculate</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Comments </label>
+                                                <textarea rows="3" cols="20" formControlName="comments"  [(ngModel)]="item.comments" class="form-control">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <button *ngIf="saveButton" type="button" style="background: #1C315F; border:none;"  class="btn btn-success submit" (click)="getExtracPrice($event)">{{saveLabel}}</button>
+                                    <button *ngIf="!saveButton" type="button" class="btn btn-primary submit" [routerLink]="['/bookings']">Back</button>
+                                </form> 
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink class="{{onEditView}}">Notes</a>
+                            <ng-template ngbNavContent>
+                                <form [formGroup]="notesformGroup">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label class="form-label">Notes <span style="color:red;">*</span></label>
+                                            <div class="input-group mb-3">
+                                               
+                                                <textarea rows="5" formControlName="notes" [(ngModel)]="itemNotes.notes" [ngClass]="{ 'is-invalid': submitted && f1.notes.errors }" class="form-control"></textarea>
+                                                <div *ngIf="submitted && f1.notes.errors" class="invalid-feedback">
+                                                <div *ngIf="f1.notes.errors.required">Note is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="button" style="background: #1C315F; border:none;"  class="btn btn-success submit" (click)="saveNotes($event)">Add</button>
+                                    
+                                </form>
+                                <div class="row" *ngIf="notesData.length > 0" style="margin-top:20px;">
+                                    <div class="col-md-12 stretch-card">
+                                      <div class="card">
+                                        <div class="card-body">
+                                          <!--<h6 class="card-title">Data Table</h6>-->
+                                          <div class="table-responsive">
+                                            <table id="dataTableExample1" class="table table-striped-new">
+                                              <thead>
+                                                <tr>
+                                                    
+                                                    <th>Notes</th>
+                                                    <th>Created By</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr *ngFor="let note of notesData">
+                                                    <td>{{note.notes}}</td>
+                                                    <td>{{note.createdBy}}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>  
+                    </ul>
+                    <div [ngbNavOutlet]="defaultNav" class="border border-top-0 p-3"></div>
+                    <!--<p class="mt-2">Active: {{ defaultNavActiveId }}</p>-->
+                </div>
+         
+            </div>
+        </div>
+    </div>
+</div>

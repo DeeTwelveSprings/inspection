@@ -1,0 +1,1091 @@
+<!--<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/bookings">Bookings</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{addUpdateLabel}}</li>
+    </ol>
+</nav>-->
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <h4 class="card-title mb-3 mb-md-0">{{addUpdateLabel}} Booking</h4>
+                </div>
+                
+                <div class="col-sm-6" style="width: 65%; text-align: right;">
+                    <div *ngIf="item && item.id && item.paymentStatus == 'PENDING'">
+                        <b>Payment URL :</b> {{paymentUrl}} &nbsp;&nbsp; <button style="background: #1C315F; border:none;" type="button" class="btn btn-success" (click)="copyURL();">Copy URL</button>
+                    </div>
+                </div>
+                <div class="col-sm-2" style="text-align: right; width: 10%; margin:0px; padding: 0px;">
+                    <button *ngIf="item.id" style="background: #1C315F;border:none;" (click)="sendForm()" type="button" class="btn btn-success">Utility Request</button>
+                </div>
+                <div class="col-sm-2" style="text-align: right; width: 8%; margin:0px; padding: 0px;">
+                    <button *ngIf="item.id" style="background: #1C315F;border:none;" (click)="trackorder()" type="button" class="btn btn-success">Track WO</button>
+                </div>
+                
+                <!--<div class="col-sm-10 d-flex align-items-center flex-wrap text-nowrap">
+                    
+                    
+                    <button *ngIf="item.id" style="background: #1C315F; margin-left: 50px;border:none;" (click)="trackorder()" type="button" class="btn btn-success">Track WO</button>
+
+                    <button *ngIf="item.id" style="background: #1C315F; margin-left: 20px;border:none;" (click)="sendForm()" type="button" class="btn btn-success">Send Form</button>
+                </div>-->
+
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+            <!--<h6 class="card-title">Form Grid</h6>-->
+            
+            <alert></alert>
+               
+            <form [formGroup]="formGroup">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="mb-3 partsection" (click)="tabon('tabclientinfo')">
+                            <h5 class="boxtitle">Client Information</h5>
+                            <span class="textcl" *ngIf="item.firstName"><b>Client 1:</b> {{item.firstName}} {{item.lastName}} <br /></span>
+                            <span class="textcl" *ngIf="item.secondaryFullName"><b>Client 2:</b> {{item.secondaryFullName}} <br /></span>
+                            <span class="textcl" *ngIf="item.transFullName"><b>Client 3:</b> {{item.transFullName}} <br /></span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabaddress')">
+                            <h5 class="boxtitle">Inspection Address</h5>
+                            <span class="textcl">{{item.address}}</span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabproperty')">
+                            <h5 class="boxtitle">Property Description</h5>
+                            <span class="textcl" *ngIf="item.buildingType"><b>Building Type: </b>{{item.buildingType}}, </span> <span class="textcl" *ngIf="item.dwelling"><b>Dwelling: </b>{{item.dwelling}}, </span> <span class="textcl" *ngIf="item.stories"><b>Stories: </b>{{item.stories}}, </span> <span class="textcl" *ngIf="item.rooms"><b>Rooms: </b>{{item.rooms}}, </span> <span class="textcl" *ngIf="item.bedrooms"><b>Bedrooms: </b>{{item.bedrooms}}, </span> <span class="textcl" *ngIf="item.bathrooms"><b>Bathrooms: </b>{{item.bathrooms}}, </span> <span class="textcl" *ngIf="item.squareFeet"><b>Square Feet: </b>{{item.squareFeet}}, </span> <span class="textcl" *ngIf="item.yearBuilt"><b>Year Built: </b>{{item.yearBuilt}}</span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabdatetime')">
+                            <h5 class="boxtitle">Date/Time/Inspector</h5>
+                            <span class="textcl">{{showInspectorName}}</span> <br /><span class="textcl">{{item.inspectionDate | date:'EEE, MMM dd, yyyy'}}  {{modifiedTime}}</span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabinspectiontype')">
+                            <h5 class="boxtitle">Inspection Type/Fee</h5>
+                            <span class="textcl">{{item.inspectionType}} - <b>Total: </b>${{item.packagePrice}}</span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabagent')">
+                            <h5 class="boxtitle">Agent Information</h5>
+                            <span class="textcl" *ngIf="item.agentName"><b>B: </b>{{item.agentName}} <br /></span>
+                            <span class="textcl" *ngIf="item.agentName"><b>Email: </b>{{item.agentEmail}} <br /></span>
+                            <span class="textcl" *ngIf="item.agentName"><b>Agent Phone: </b>{{formatPhoneNumber(item.agentPhone)}} <br /><br /></span>
+                            <span class="textcl" *ngIf="item.sellerAgentName"><b>S: </b>{{item.sellerAgentName}} <br /></span>
+                            <span class="textcl" *ngIf="item.sellerAgentEmail"><b>Email: </b>{{item.sellerAgentEmail}} <br /></span>
+                            <span class="textcl" *ngIf="item.sellerAgentPhone"><b>Agent Phone: </b>{{formatPhoneNumber(item.sellerAgentPhone)}}</span>
+                        </div>
+                        <div class="mb-3 partsection" *ngIf="item.id" (click)="tabon('tabnotes')">
+                            <h5 class="boxtitle">Notes</h5>
+                            <span class="textcl"></span>
+                        </div>
+                        <div class="mb-3 partsection" (click)="tabon('tabcontract')">
+                            <h5 class="boxtitle">Contract</h5>
+                            <span class="textcl">THIS CONTRACT LIMITS THE LIABILITY OF THE HOME INSPECTION COMPANY....</span>
+                        </div>
+                        <div class="mb-3 partsection" *ngIf="item.id" (click)="tabon('tabemail')">
+                            <h5 class="boxtitle">Confirmation Email</h5>
+                        </div>
+                    </div>
+                    <div class="col-sm-9 mainbox">
+                        <div class="mb-9 bigsection" *ngIf="tabclientinfo">
+                           <h4 class="maintitle">Client Information</h4>
+                           <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">First Name <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="firstname" [(ngModel)]="item.firstName" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" class="form-control" placeholder="Enter First name">
+                                        <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.firstname.errors.required">First Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Last Name <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="lastname" [(ngModel)]="item.lastName" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" class="form-control" placeholder="Enter Last Name">
+                                        <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                                            <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="form-label">Email <span style="color:red;">*</span> <span *ngIf='bsubscribe == "Yes"' class="subscribe">Subscribed</span><span *ngIf='bsubscribe == "No"' class="unsubscribe">Unsubscribed</span></label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                        <input type="text" formControlName="email" [(ngModel)]="item.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" placeholder="Enter Email">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">CC Email </label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                        <input type="text" formControlName="ccemail" [(ngModel)]="item.ccEmail" [ngClass]="{ 'is-invalid': submitted && f.ccemail.errors }" class="form-control" placeholder="Enter CC Email">
+                                        <div *ngIf="submitted && f.ccemail.errors" class="invalid-feedback">
+                                        <div *ngIf="f.ccemail.errors.required">CC Email is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Phone <span style="color:red;">*</span></label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                        <input type="text" formControlName="phone" mask="(000) 000-0000" [(ngModel)]="item.phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" class="form-control" placeholder="Enter Phone Number">
+                                        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                        <div *ngIf="f.phone.errors.required">Phone is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="secondaryBox">
+                                <label class="mainlab"><input type="checkbox" class="form-check-input" [checked]="secondaryOn == true" (click)="secondary_check($event)" style="margin-right: 15px;" /><b>Secondary Contact</b></label>
+                                <div class="row" *ngIf="secondaryOn">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Secondary Full Name </label>
+                                            <input type="text" formControlName="secondaryfullname" [(ngModel)]="item.secondaryFullName" class="form-control" placeholder="Enter Seondary Full Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="form-label">Secondary Phone </label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                            <input type="text" formControlName="secondaryPhone" mask="(000) 000-0000" [(ngModel)]="item.secondaryPhone" class="form-control" placeholder="Enter Seondary Phone Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="form-label">Secondary Email </label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                            <input type="text" formControlName="secondaryEmail" [(ngModel)]="item.secondaryEmail" class="form-control" placeholder="Enter Seondary Email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <div class="trasactionBox">
+                                <label class="mainlab"><input type="checkbox" class="form-check-input" [checked]="transsectionOn == true" (click)="trans_check($event)" style="margin-right: 15px;" /><b>Transaction Coordinator</b></label>
+                                <div class="row" *ngIf="transsectionOn">
+                                    <div class="col-sm-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Transaction Coordinator Name</label>
+                                            <input type="text" formControlName="trans_full_name" [(ngModel)]="item.transFullName" [ngClass]="{ 'is-invalid': submitted && f.trans_full_name.errors }" class="form-control" placeholder="Enter Name">
+                                            <div *ngIf="submitted && f.trans_full_name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.trans_full_name.errors.required">First Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="form-label">Transaction Coordinator Phone</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                            <input type="text" formControlName="trans_phone" mask="(000) 000-0000"  [(ngModel)]="item.transPhone" [ngClass]="{ 'is-invalid': submitted && f.trans_phone.errors }" class="form-control" placeholder="Enter Phone">
+                                            <div *ngIf="submitted && f.trans_phone.errors" class="invalid-feedback">
+                                            <div *ngIf="f.trans_phone.errors.required">First Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="form-label">Transaction Coordinator Email</label>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                            <input type="text" formControlName="trans_email" [(ngModel)]="item.transEmail" [ngClass]="{ 'is-invalid': submitted && f.trans_email.errors }" class="form-control" placeholder="Enter Email">
+                                            <div *ngIf="submitted && f.trans_email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.trans_email.errors.required">First Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-9 bigsection" *ngIf="tabaddress">
+                            <h4 class="maintitle">Inspection Address</h4>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label class="form-label">Address <span style="color:red;">*</span></label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-home"></i></span>
+                                        <input type="text" formControlName="address" [(ngModel)]="item.address" [options]="options" ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" class="form-control" placeholder="Enter Address">
+                                        <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                        <div *ngIf="f.address.errors.required">Address is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                    <label class="form-label">Unit </label>
+                                    <input type="text" formControlName="unit" [(ngModel)]="item.unit" [ngClass]="{ 'is-invalid': submitted && f.unit.errors }" class="form-control" placeholder="Enter Unit">
+                                    <div *ngIf="submitted && f.unit.errors" class="invalid-feedback">
+                                        <div *ngIf="f.unit.errors.required">Unit is required</div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">City <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="city" [(ngModel)]="item.city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" class="form-control" placeholder="Enter City">
+                                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                                        <div *ngIf="f.city.errors.required">City is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">State <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="state" [(ngModel)]="item.state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" class="form-control" placeholder="Enter State">
+                                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                                        <div *ngIf="f.state.errors.required">State is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Zipcode <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="zipcode" [(ngModel)]="item.zipcode" maxlength="5" minlength="5" [ngClass]="{ 'is-invalid': submitted && f.zipcode.errors }" class="form-control" placeholder="Enter Zipcode">
+                                        <div *ngIf="submitted && f.zipcode.errors" class="invalid-feedback">
+                                        <div *ngIf="f.zipcode.errors.required">Zipcode is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9 bigsection" *ngIf="tabinspectiontype">
+                            <h4 class="maintitle">Inspection Type & Fee</h4>
+                           
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Reason For Inspection <span style="color:red;">*</span></label>
+                                        <select formControlName="inspectiontype" (change)="changeInspc($event)" [(ngModel)]="item.inspectionType" [ngClass]="{ 'is-invalid': submitted && f.inspectiontype.errors }" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="New Construction">New Construction</option>
+                                            <option value="Builder warranty Inspection">Builder warranty Inspection</option>
+                                            <option value="Buyer">Buyer</option>
+                                            <option value="Phased">Phased</option>
+                                            <option value="Seller Inspection">Seller Inspection</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.inspectiontype.errors" class="invalid-feedback">
+                                            <div *ngIf="f.inspectiontype.errors.required">Inspection Type is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" *ngIf="subPackage">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phase</label>
+                                        <select formControlName="inspectionSubType" [(ngModel)]="item.inspectionSubType" [ngClass]="{ 'is-invalid': submitted && f.inspectionSubType.errors }" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="First Phase Slab Inspection">First Phase Slab Inspection</option>
+                                            <option value="Second Phase/ Pre Dry wall Inspection">Second Phase/ Pre Dry wall Inspection</option>
+                                            <option value="Final Phase Full Inspection">Final Phase Full Inspection</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.inspectionSubType.errors" class="invalid-feedback">
+                                            <div *ngIf="f.inspectionSubType.errors.required">Phase is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Package <span style="color:red;">*</span></label>
+                                        <select formControlName="packagename" (change)="packageChange($event)" [(ngModel)]="item.packageName" [ngClass]="{ 'is-invalid': submitted && f.packagename.errors }" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="Total Solutions Bundle">Total Solutions Bundle</option>
+                                            <option *ngIf="showpckg" value="The Top 5 Bundle">The Top 5 Bundle</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.packagename.errors" class="invalid-feedback">
+                                        <div *ngIf="f.packagename.errors.required">Package is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Review <span style="color:red;">*</span></label>
+                                        <select formControlName="reportreview" [(ngModel)]="item.reportreView" [ngClass]="{ 'is-invalid': submitted && f.reportreview.errors }" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="In Person Day of Inspection"> In Person Day of Inspection (last 30 minutes of inspection only)</option>
+                                            <option value="Via Phone/Online">Via Phone/Online (30 minute phone call post inspection)</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.reportreview.errors" class="invalid-feedback">
+                                        <div *ngIf="f.reportreview.errors.required">Report Review is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" *ngIf="item.id && (item.paymentStatus == 'PAID' || item.reinspection == 'Yes')">
+                                    <div class="mb-3">
+                                        <label class="form-label">Re-Inspection <span style="color:red;">*</span></label>
+                                        <select formControlName="reinspection" (change)="changeReInspection($event)" [(ngModel)]="item.reinspection" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row" *ngIf="isReinspecData">
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Re-Inspection Price <span style="color:red;">*</span></label>
+                                        <select [(ngModel)]="reinspectionPrice" (change)="changeRePrice($event)" [ngModelOptions]="{standalone: true}" class="form-select">
+                                            <option value="175">$175</option>
+                                            <option value="250">$250</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="isReinspecData">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Add Re-Inspection Items </label>
+                                        <textarea rows="3" cols="20" formControlName="reinspectionComments"  [(ngModel)]="item.reinspectionComments" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="!isReinspecData">
+                                <div class="col-sm-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" style="width:100%"><b>Select Ancillary Services</b></label>
+                                        <div class="row" *ngIf="item.additionalServices">
+                                            <!--<ul>
+                                                <li *ngFor="let p of servicesArr">
+                                                    {{p}}
+                                                </li>
+                                            </ul>-->
+                                        </div>
+                                        
+                                        <div class="row" style="padding-bottom: 5px;">
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op1 == true" (change)="checkValue($event)" value="100" data-id="Swimming Pool/Hot Tub">&nbsp;Swimming Pool/Hot Tub - $100
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op2 == true" (change)="checkValue($event)" value="225" data-id="Septic">&nbsp;Septic - $225
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op3 == true" (change)="checkValue($event)" value="100" data-id="Storage/Shed w/out Utilities">&nbsp;Storage/Shed w/out Utilities - $100
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op4 == true" (change)="checkValue($event)" value="100" data-id="Storage/Shed with Utilities">&nbsp;Storage/Shed withUtilities - $100
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row" style="padding: 5px 0px;">
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op5 == true" (change)="checkValue($event)" value="100" data-id="Barn w/out Utilities">&nbsp;Barn w/out Utilities - $100
+                                                
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op6 == true" (change)="checkValue($event)" value="50" data-id="Outdoor Kitchen Appliances">&nbsp;Outdoor Kitchen Appliances - $50
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op7 == true" (change)="checkValue($event)" value="250" data-id="Guest House">&nbsp;Guest House - $250
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" [checked]="item.op8 == true" (change)="checkValue($event)" value="100" data-id="Workshop with Utilities">&nbsp;Workshop with Utilities - $100
+                                            </div>
+                
+                                        </div>
+                                        <div class="row" style="padding: 5px 0px;" >
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">Checkout Summary</h6>
+                                            <div class="table-responsive pt-3">
+                                                <table class="table table-bordered" *ngIf="isReinspecData">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Total Re-InspectionCost</td>
+                                                            <td><b>${{reinspectionPrice | number : '1.2-2'}}</b></td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                                <table class="table table-bordered" *ngIf="!isReinspecData">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Service Cost</td>
+                                                        <td><b>${{serviceCost | number : '1.2-2'}}</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Additional Services Cost</td>
+                                                        <td><b>${{additionalServicesCost | number : '1.2-2'}}</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Amount</td>
+                                                        <td><b>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"><i class="feather icon-dollar-sign"></i></span>
+                                                                <input type="text" formControlName="packagePrice" [(ngModel)]="item.packagePrice" [ngClass]="{ 'is-invalid': submitted && f.packagePrice.errors }" class="form-control">
+                                                            
+                                                                <div *ngIf="submitted && f.packagePrice.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.packagePrice.errors.required">Final Price is required</div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <!--{{finalServiceCost | number : '1.2-2'}} --></b></td>
+                                                    </tr>
+                                                    <!--<tr>
+                                                        <td colspan="2"><span style="color:rebeccapurple; text-decoration:underline; cursor: pointer;" (click)="calculateFinalPrice('calculate')">Calculate</span></td>
+                                                    </tr>-->
+                                                </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="mb-9 bigsection" *ngIf="tabproperty">
+                            <h4 class="maintitle">Property Description</h4>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Building Type</label>
+                                        <select formControlName="buildingType" [(ngModel)]="item.buildingType"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let btype of buildingTypeData" value="{{btype}}">{{btype}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Dwelling</label>
+                                        <select formControlName="dwelling" [(ngModel)]="item.dwelling"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let dwell of dwellingData" value="{{dwell}}">{{dwell}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Stories</label>
+                                        <select formControlName="stories" [(ngModel)]="item.stories"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let stor of storiesData" value="{{stor}}">{{stor}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Rooms</label>
+                                        <select formControlName="rooms" [(ngModel)]="item.rooms"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let room of roomsData" value="{{room}}">{{room}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Bedrooms</label>
+                                        <select formControlName="bedrooms" [(ngModel)]="item.bedrooms"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let bedrom of bedroomData" value="{{bedrom}}">{{bedrom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Bathrooms</label>
+                                        <select formControlName="bathrooms" [(ngModel)]="item.bathrooms"class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option *ngFor="let bathroom of bathroomData" value="{{bathroom}}">{{bathroom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                    <label class="form-label">Square Footage <span style="color:red;">*</span></label>
+                                    <input type="text" formControlName="squarefeet" (change)="squareFeetChange($event)" [(ngModel)]="item.squareFeet" maxlength="10" [ngClass]="{ 'is-invalid': submitted && f.squarefeet.errors }" class="form-control" placeholder="Enter Square Footage">
+                                    <div *ngIf="submitted && f.squarefeet.errors" class="invalid-feedback">
+                                        <div *ngIf="f.squarefeet.errors.required">Square Footage is required</div>
+                                        <div *ngIf="f.squarefeet.errors.pattern">Enter only number.</div>
+                                        <div *ngIf="f.squarefeet.errors.max">Maximum 6000 Squarefeet</div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Year Built <span style="color:red;">*</span></label>
+                                        <input type="text" formControlName="yearbuilt" (change)="yearBuiltChange($event)" [(ngModel)]="item.yearBuilt" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f.yearbuilt.errors }" class="form-control" placeholder="Enter Built Year">
+                                        <div *ngIf="submitted && f.yearbuilt.errors" class="invalid-feedback">
+                                            <div *ngIf="f.yearbuilt.errors.required">Year Built is required</div>
+                                            <div *ngIf="f.yearbuilt.errors.pattern">Enter only number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Foundation Slab Option</label>
+                                        <select formControlName="foundation"  [(ngModel)]="item.foundation" [ngClass]="{ 'is-invalid': submitted && f.foundation.errors }" class="form-select">
+                                            <option [ngValue]="undefined" selected>-- Select --</option>
+                                            <option value="Basement">Basement</option>
+                                            <option value="Slab">Slab</option>
+                                            <option value="Crawlspace">Crawlspace</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.foundation.errors" class="invalid-feedback">
+                                        <div *ngIf="f.foundation.errors.required">Foundation Slab is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Comments </label>
+                                        <textarea rows="3" cols="20" formControlName="comments"  [(ngModel)]="item.comments" class="form-control">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-9 bigsection" *ngIf="tabdatetime">
+                            <h4 class="maintitle">Date/Time/Inspector</h4>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Inspection Date <span style="color:red;">*</span></label>
+                                        <span style="display: block">
+                                        
+                                        <ngb-datepicker [startDate]="startDateMonth" [minDate]="minDate" [ngModelOptions]="{standalone: true}" [(ngModel)]="inspectionDate" (dateSelect)="changeDate($event)"></ngb-datepicker>
+                                        </span>
+                                        <!--<input type="text" formControlName="inspectiondate" [ngClass]="{ 'is-invalid': submitted && f.inspectiondate.errors }" class="form-control" placeholder="Enter Date">
+                                        <div *ngIf="submitted && f.inspectiondate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.inspectiondate.errors.required">Inspection Date is required</div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Start Time <span style="color:red;">*</span></label>
+                                            <div class="mb-3">    
+                                                <select formControlName="inspectiontime"  (change)="changeNewTime($event)" [(ngModel)]="item.inspectionTime" [ngClass]="{ 'is-invalid': submitted && f.inspectiontime.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="08:00:00">8 am</option>
+                                                    <option value="08:30:00">8:30 am</option>
+                                                    <option value="09:00:00">9 am</option>
+                                                    <option value="09:30:00">9:30 am</option>
+                                                    <option value="10:00:00">10 am</option>
+                                                    <option value="10:30:00">10:30 am</option>
+                                                    <option value="11:00:00">11 am</option>
+                                                    <option value="11:30:00">11:30 am</option>
+                                                    <option value="12:00:00">12 pm</option>
+                                                    <option value="12:30:00">12:30 pm</option>
+                                                    <option value="13:00:00">01 pm</option>
+                                                    <option value="13:30:00">01:30 pm</option>
+                                                    <option value="14:00:00">02 pm</option>
+                                                    <option value="14:30:00">02:30 pm</option>
+                                                    <option value="15:00:00">03 pm</option>
+                                                    <option value="15:30:00">03:30 pm</option>
+                                                    <option value="16:00:00">04 pm</option>
+                                                    <option value="16:30:00">04:30 pm</option>
+                                                    <option value="17:00:00">05 pm</option>
+                                                    <option value="17:30:00">05:30 pm</option>
+                                                    <option value="18:00:00">06 pm</option>
+                                                    <option value="18:30:00">06:30 pm</option>
+                                                    <option value="19:00:00">07 pm</option>
+                                                    <option value="19:30:00">07:30 pm</option>
+                                                    <option value="20:00:00">08 pm</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.inspectiontime.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.inspectiontime.errors.required">Inspection Time is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label class="form-label">Duration <span style="color:red;">*</span></label>
+                                            <div class="mb-3">    
+                                                <select formControlName="duration"  (change)="changeDurationNew($event)" [(ngModel)]="item.duration" [ngClass]="{ 'is-invalid': submitted && f.duration.errors }" class="form-select">
+                                                    <option [ngValue]="undefined" selected>-- Select --</option>
+                                                    <option value="1:0">1 Hour</option>
+                                                    <option value="1:30">1.5 Hour</option>
+                                                    <option value="2:0">2 Hour</option>
+                                                    <option value="2:30">2.5 Hour</option>
+                                                    <option value="3:0">3 Hour</option>
+                                                    <option value="3:30">3.5 Hour</option>
+                                                    <option value="4:0">4 Hour</option>
+                                                    <option value="4:30">4.5 Hour</option>
+                                                    <option value="5:0">5 Hour</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.duration.errors" class="invalid-feedback">
+                                                <div *ngIf="f.duration.errors.required">Duration is required</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="table-responsive">
+                                                <!--<table id="dataTableExample1" class="table table-striped-new">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Officer Name</th>
+                                                        <th>Address</th>
+                                                        <th>Inspection Time</th>
+                                                        <th>Duration</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let alloff of allofficerData">
+                                                        <td>{{alloff.officerName}}</td>
+                                                        <td>{{alloff.address}}</td>
+                                                        <td>{{formatDateTime(alloff.inspectionTime)}}</td>
+                                                        <td>{{alloff.duration}} hrs</td>
+                                                    </tr>
+                                                </tbody>
+                                                </table>-->
+                                                <div *ngIf="loadcal">
+                                                <full-calendar #fc [options]="calendarOptions"></full-calendar>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Inspection Time <span style="color:red;">*</span></label>
+                                        <div class="user-input secound-radio">
+                                            <div class="time-sloat" *ngIf="i1">
+                                                <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" id="i1" value="09:00:00"> 9:00 am</label>
+                                            </div>
+                                            
+                                            <div class="time-sloat" *ngIf="i6">
+                                                <label><input type="radio" (change)="onTimeChange($event)" [(ngModel)]="item.inspectionTime" formControlName="inspectiontime" value="14:00:00"> 2:00 pm</label>
+                                            </div>
+                                            
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 0.875em; color: #ff3366;" *ngIf="submitted && f.inspectiontime.errors?.required">Inspection Time is required</div>
+                                        </div>
+                                        <div style="color:red" *ngIf="slotBooked">All slots are booked</div>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Inspector Name :</label>
+                                        <span>&nbsp;&nbsp;<b [ngClass]="ontheflyInspectorID == 0 ? 'inspectorAlert' : ''">{{showInspectorName}}</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9 bigsection" *ngIf="tabagent">
+                            <h4 class="maintitle">Agent Information</h4>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Buyer Agent Name <span *ngIf='basubscribe == "Yes"' class="subscribe">Subscribed</span><span *ngIf='basubscribe == "No"' class="unsubscribe">Unsubscribed</span></label>
+                                        <input type="text" formControlName="agentname" (ngModelChange)="selectAgent($event)" [inputFormatter]="formatter" [resultTemplate]="rt1" [ngbTypeahead]="filtersearch" [(ngModel)]="invName" class="form-control" placeholder="Enter Agent Name">
+                                    </div>
+                                    <ng-template #rt1 let-r="result" let-t="term">
+                                        <ngb-highlight [result]="r.name" [term]="t">
+                                        </ngb-highlight>
+                                    </ng-template>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Buyer Agent Email </label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                        <input type="text" formControlName="agentemail" [(ngModel)]="item.agentEmail" [ngClass]="{ 'is-invalid': submitted && f.agentemail.errors }" class="form-control" placeholder="Enter Agent Email">
+                                        <div *ngIf="submitted && f.agentemail.errors" class="invalid-feedback">
+                                        <div *ngIf="f.agentemail.errors.required">CC Email is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Buyer Agent Phone </label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                        <input type="text" formControlName="agentphone" [(ngModel)]="item.agentPhone" mask="(000) 000-0000" [ngClass]="{ 'is-invalid': submitted && f.agentphone.errors }" class="form-control" placeholder="Enter Agent Phone">
+                                        <div *ngIf="submitted && f.agentphone.errors" class="invalid-feedback">
+                                            <div *ngIf="f.agentphone.errors.required">Phone is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Seller Agent Name <span *ngIf='sasubscribe == "Yes"' class="subscribe">Subscribed</span><span *ngIf='sasubscribe == "No"' class="unsubscribe">Unsubscribed</span></label>
+                                        <input type="text" formControlName="sellerAgentName" (ngModelChange)="selectSellerAgent($event)" [inputFormatter]="formatter" [resultTemplate]="rt1" [ngbTypeahead]="filtersearchseller" [(ngModel)]="invName1" class="form-control" placeholder="Enter Agent Name">
+                                    </div>
+                                    <ng-template #rt1 let-r="result" let-t="term">
+                                        <ngb-highlight [result]="r.name" [term]="t">
+                                        </ngb-highlight>
+                                    </ng-template>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Seller Agent Email </label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                                        <input type="text" formControlName="sellerAgentEmail" [(ngModel)]="item.sellerAgentEmail" [ngClass]="{ 'is-invalid': submitted && f.sellerAgentEmail.errors }" class="form-control" placeholder="Enter Agent Email">
+                                        <div *ngIf="submitted && f.sellerAgentEmail.errors" class="invalid-feedback">
+                                        <div *ngIf="f.sellerAgentEmail.errors.required">CC Email is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Seller Agent Phone </label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                                        <input type="text" formControlName="sellerAgentPhone" [(ngModel)]="item.sellerAgentPhone" mask="(000) 000-0000" [ngClass]="{ 'is-invalid': submitted && f.sellerAgentPhone.errors }" class="form-control" placeholder="Enter Agent Phone">
+                                        <div *ngIf="submitted && f.sellerAgentPhone.errors" class="invalid-feedback">
+                                            <div *ngIf="f.sellerAgentPhone.errors.required">Phone is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4" style="margin-top: 20px;">
+                                    <button type="button" style="background: #1C315F; border:none; margin-right: 10px;"  class="btn btn-success submit" (click)="openAgentPopup(agentModal)">Add Agent</button>
+                                
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9 bigsection" *ngIf="tabnotes">
+                            <h4 class="maintitle">Notes</h4>
+                            <form [formGroup]="notesformGroup">
+                                <div class="row dataTable-container">
+                                    <table id="dataTableExample" class="table table-striped-new dataTable-table question">
+                                        <thead>
+                                            <tr>
+                                                <td><b>Inspection Questions</b></td>
+                                                <td><b>Answers</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Please confirm if the property is completely ready for the inspection on {{item.inspectionDate | date:'EEE, MMM dd, yyyy'}} {{modifiedTime}} - {{parseFromTwentyFourToAmPm(item.inspectionEndTime)}}</td>
+                                                <td><b>{{utilityInfo.inspectionConfirm}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please confirm if utilities are on, and completely working throughout the home (Note: Inspector cannot turn utilities on from the street)</td>
+                                                <td><b>{{utilityInfo.utilityOn}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please ensure that all thermostats are not temperature restricted (Thermostats cannot be restricted for minimum or maximum temperatures)</td>
+                                                <td><b>{{utilityInfo.temperatureRestricted}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please confirm access to the water heater, electrical panel, attic, furnace, air conditioning unit, and sprinklers if applicable (Note please ensure the pilot light on gas water heaters are lit)</td>
+                                                <td><b>{{utilityInfo.waterAccess}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>We love pets! However, to ensure they are safe, we kindly request that all pets be crated or removed from the home during the inspection. (Note: we cannot be responsible for any loose pets in a home, and this could cause a delay or cancellation of the inspection)</td>
+                                                <td><b>{{utilityInfo.safePets}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please note inspector has Suprakey access, the sellers do not need to be home to let the inspector inside the home. </td>
+                                                <td><b>{{utilityInfo.suprakeyAccess}}</b></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Please note the inspector cannot turn water on from the street or any other access point, water and gas must be enabled at all points by the owners or authorized owner representative.</td>
+                                                <td><b>{{utilityInfo.inspectorAccess}}</b></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-sm-6">
+                                        <label class="form-label">Notes <span style="color:red;">*</span></label>
+                                        <div class="input-group mb-3">
+                                           
+                                            <textarea rows="5" formControlName="notes" [(ngModel)]="itemNotes.notes" [ngClass]="{ 'is-invalid': submitted && f1.notes.errors }" class="form-control"></textarea>
+                                            <div *ngIf="submitted && f1.notes.errors" class="invalid-feedback">
+                                            <div *ngIf="f1.notes.errors.required">Note is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" style="background: #1C315F; border:none;"  class="btn btn-success submit" (click)="saveNotes($event)">Add</button>
+                                
+                            </form>
+                            <div class="row" *ngIf="notesData.length > 0" style="margin-top:20px;">
+                                <div class="col-md-12 stretch-card">
+                                  <div class="card">
+                                    <div class="card-body">
+                                      <!--<h6 class="card-title">Data Table</h6>-->
+                                      <div class="table-responsive">
+                                        <table id="dataTableExample1" class="table table-striped-new">
+                                          <thead>
+                                            <tr>
+                                                
+                                                <th>Notes</th>
+                                                <th>Created Date</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr *ngFor="let note of notesData">
+                                                <td>{{note.notes}}</td>
+                                                <td>{{note.createdDate}}</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9 bigsection" *ngIf="tabcontract">
+                            <h4 class="maintitle">Contract</h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <quill-editor style="height: 300px" [ngModelOptions]="{standalone: true}" [(ngModel)]="contracttext"
+          placeholder="Enter Text"
+          [modules]="quillConfig"
+          (onSelectionChanged)="onSelectionChanged($event)"
+          (onContentChanged)="onContentChanged($event)"
+         >
+        </quill-editor>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-9 bigsection" *ngIf="tabemail">
+                            <h4 class="maintitle">Confirmation Email</h4>
+                            <form [formGroup]="emailformGroup">
+                                <div class="row">
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">To <span style="color:red;">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" formControlName="to" [(ngModel)]="itemEmail.to" [ngClass]="{ 'is-invalid': emailSubmitted && f3.to.errors }" class="form-control">
+                                            <div *ngIf="emailSubmitted && f3.to.errors" class="invalid-feedback">
+                                                <div *ngIf="f3.to.errors.required">Email To is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">CC </label>
+                                        <div class="col-sm-7">
+                                            <input type="text" formControlName="cc" [(ngModel)]="itemEmail.cc" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">BCC </label>
+                                        <div class="col-sm-7">
+                                            <input type="text" formControlName="bcc" [(ngModel)]="itemEmail.bcc" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Subject <span style="color:red;">*</span></label>
+                                        <div class="col-sm-7">
+                                            <select formControlName="subject"  (change)="subjectChange($event)" [(ngModel)]="itemEmail.subject" [ngClass]="{ 'is-invalid': emailSubmitted && f3.subject.errors }" class="form-select">
+                                                <option [ngValue]="undefined" selected>-- Select --</option>
+                                                <option *ngFor="let data of templateData" [value]="data.id">{{data.subject}}</option>
+                                            </select>
+                                            <!--<input type="text" formControlName="subject" [(ngModel)]="itemEmail.subject" [ngClass]="{ 'is-invalid': emailSubmitted && f3.subject.errors }" class="form-control">-->
+                                            <div *ngIf="emailSubmitted && f3.subject.errors" class="invalid-feedback">
+                                                <div *ngIf="f3.subject.errors.required">Subject is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Salutation <span style="color:red;">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" formControlName="salutation" [(ngModel)]="itemEmail.salutation" [ngClass]="{ 'is-invalid': emailSubmitted && f3.salutation.errors }" class="form-control">
+                                            <div *ngIf="emailSubmitted && f3.salutation.errors" class="invalid-feedback">
+                                                <div *ngIf="f3.salutation.errors.required">Salution is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Include </label>
+                                        <div class="col-sm-7">
+                                            <div class="col-sm-12">
+                                                <input type="checkbox" class="form-check-input" formControlName="address" [(ngModel)]="itemEmail.address" value="true">&nbsp;Address: {{item.address}}
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="time" [(ngModel)]="itemEmail.time" value="true">&nbsp;Date: {{item.inspectionDate | date:'EEE, MMM dd, yyyy'}}
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="fee" [(ngModel)]="itemEmail.fee" value="true">&nbsp;Fee: ${{item.packagePrice}}
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="duration" [(ngModel)]="itemEmail.duration" value="true">&nbsp;Duration : {{showDuration}} hr(s)
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="includeLink" [(ngModel)]="itemEmail.includeLink" value="true">&nbsp;Include link for payment in email
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="consultationTime" [(ngModel)]="itemEmail.consultationTime" value="true">&nbsp;Consultation Time
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="inspectorName" [(ngModel)]="itemEmail.inspectorName" value="true">&nbsp;Inspector Name
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input type="checkbox" class="form-check-input" formControlName="inspectorLicense" [(ngModel)]="itemEmail.inspectorLicense" value="true">&nbsp;Inspector License Number
+                                            </div>
+                                            
+                                            
+                                            
+                                            <!--<div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="50" data-id="Outdoor Kitchen Appliances">&nbsp;Outdoor Kitchen Appliances - $50
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="250" data-id="Guest House">&nbsp;Guest House - $250
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" class="form-check-input" (change)="checkValue($event)" formControlName="additionalServices" value="100" data-id="Workshop with Utilities">&nbsp;Workshop with Utilities - $100
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-sm-2 col-form-label">Body <span style="color:red;">*</span></label>
+                                        <div class="col-sm-9">
+                                            <!--<quill-editor [ngModelOptions]="{standalone: true}" [(ngModel)]="itemEmail.message"
+                                                placeholder="Enter Text"
+                                                [modules]="quillConfig"
+                                                (onSelectionChanged)="onSelectionChanged($event)"
+                                                (onContentChanged)="onContentChanged($event)"
+                                                >
+                                                </quill-editor>-->
+                                            <textarea type="text" rows="10" cols="20" formControlName="message" [(ngModel)]="itemEmail.message" [ngClass]="{ 'is-invalid': emailSubmitted && f3.message.errors }" class="form-control"></textarea>
+                                            <div *ngIf="emailSubmitted && f3.message.errors" class="invalid-feedback">
+                                                <div *ngIf="f3.message.errors.required">Message is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3" *ngIf="item.id">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-7">
+                                            <button type="button" class="btn btn-primary" (click)="sendEmail($event)">Send Email</button>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4" style="margin-top: 0px; text-align: right;">
+                                <button type="button" style="background: #1C315F; border:none; margin-right: 10px;"  class="btn btn-success submit" (click)="getExtracPrice($event)">{{saveLabel}}</button>
+                                <button type="button" style="background: #1C315F; border:none;" class="btn btn-primary submit" [routerLink]="['/dashboard']">Back</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+                
+                
+    
+                
+            </form> 
+                        
+                    
+                    
+                
+         
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #agentModal let-modal>
+    <form [formGroup]="agentformGroup">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Agent</h5> 
+        <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Full Name <span style="color:red;">*</span></label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="name" [(ngModel)]="itemAgent.name" [ngClass]="{ 'is-invalid': agentSubmitted && f2.name.errors }" class="form-control" placeholder="Enter Full Name">
+                <div *ngIf="agentSubmitted && f2.name.errors" class="invalid-feedback">
+                    <div *ngIf="f2.name.errors.required">Name is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">License <span style="color:red;">*</span></label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="license" [(ngModel)]="itemAgent.license" [ngClass]="{ 'is-invalid': agentSubmitted && f2.license.errors }" class="form-control" placeholder="Enter License">
+                <div *ngIf="agentSubmitted && f2.license.errors" class="invalid-feedback">
+                    <div *ngIf="f2.license.errors.required">License is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Phone <span style="color:red;">*</span></label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="phone" mask="(000) 000-0000" [(ngModel)]="itemAgent.phone" [ngClass]="{ 'is-invalid': agentSubmitted && f2.phone.errors }" class="form-control" placeholder="Enter Phone">
+                <div *ngIf="agentSubmitted && f2.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f2.phone.errors.required">Phone is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Email <span style="color:red;">*</span></label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="email" [(ngModel)]="itemAgent.email" [ngClass]="{ 'is-invalid': agentSubmitted && f2.email.errors }" class="form-control" placeholder="Enter Email">
+                <div *ngIf="agentSubmitted && f2.email.errors" class="invalid-feedback">
+                    <div *ngIf="f2.email.errors.required">Email is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Address </label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="address" [(ngModel)]="itemAgent.address" class="form-control" placeholder="Enter Address">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Company Name </label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="companyName" [(ngModel)]="itemAgent.companyName" class="form-control" placeholder="Enter Company Name">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Notes </label>
+            <div class="col-sm-9">
+                <input type="text" formControlName="notes" [(ngModel)]="itemAgent.notes" class="form-control" placeholder="Enter Notes">
+            </div>
+        </div>
+                
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closePopup()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveAgent($event)">Save</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>

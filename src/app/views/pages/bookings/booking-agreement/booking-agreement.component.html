@@ -1,0 +1,197 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/bookings">Inspection Legal Agreement</a></li>
+        <li class="breadcrumb-item active" aria-current="page">View</li>
+    </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <div>
+            <h4 class="card-title mb-3 mb-md-0">View Agreement</h4>
+          </div>
+          <div class="d-flex align-items-center flex-wrap text-nowrap">
+            <button type="button" style="background: #1C315F; border:none;" (click)="exportToPDF()" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+              Download Contract
+            </button>&nbsp;&nbsp;&nbsp;
+            <button type="button" style="background: #1C315F; border:none;" (click)="showInvoice()" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+              Show Invoice
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card printme">
+    <div class="card">
+      <div class="card-body" id="htmlData">
+        <!--<h6 class="card-title">Form Grid</h6>-->
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-xl-6"><img src="assets/images/others/Logo.png" width="250px; margin-bottom15px;"> <br /><p>{{item.address}}</p></div>
+            <div class="col-xl-6"></div>
+          </div>
+        </div>
+
+        <p>PARTIES TO THE AGREEMENT</p>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-xl-4"><p><b>Company</b> <br />539 W Commerce St, Dallas, <br />TX 75208, <br />United States</p></div>
+            <div class="col-xl-4"><p><b>Client</b> <br />{{item.address}}</p></div>
+          </div>
+        </div>
+
+        <p><b>Total Fee: ${{item.packagePrice}}</b></p>
+
+
+        
+        <p>THIS CONTRACT LIMITS THE LIABILITY OF THE HOME INSPECTION COMPANY. PLEASE READ CAREFULLY BEFORE SIGNING.</p><br />
+<p>In addition to the limitations in the Standards of Practice, the Inspection of this property is subject to the Limitations and Conditions set out in this Agreement. The Inspection is performed in accordance with the Standards of Practice of our national association.</p>
+
+<p>LIMITATIONS AND CONDITIONS OF THE HOME INSPECTION</p>
+
+<p>There are limitations to the scope of this Inspection. It provides a general overview of the more obvious repairs that may be needed. It is not intended to be an exhaustive list. The ultimate decision of what to repair or replace is yours. One homeowner may decide that certain conditions require repair or replacement, while another will not.</p>
+
+<b>1) THE INSPECTION IS NOT TECHNICALLY EXHAUSTIVE.</b>
+<p>The Home Inspection provides you with a basic overview of the condition of the property. Because your Home Inspector has only a limited amount of time to go through the property, the Inspection is not technically exhaustive.</p>
+<p>Some conditions noted, such as foundation cracks or other signs of settling in a house, may either be cosmetic or may indicate a potential problem that is beyond the scope of the Home Inspection.</p>
+<p>If you are concerned about any conditions noted in the Home Inspection Report, we strongly recommend that you consult a qualified Licensed Contractor or Consulting Engineer. These professionals can provide a more detailed analysis of any conditions noted in the Report at an additional cost.</p>
+
+<b>2) THE INSPECTION IS AN OPINION OF THE PRESENT CONDITION OF THE VISIBLE COMPONENTS.</b>
+<p>The Home Inspector's Report is an opinion of the present condition of the property. It is based on a visual examination of the readily accessible features of the building.</p>
+
+<p>A Home Inspection does not include identifying defects that are hidden behind walls, floors or ceilings. This includes wiring, heating, cooling, structure, plumbing and insulation that are hidden or inaccessible.</p>
+<p>Some intermittent problems may not be obvious on a Home Inspection because they only happen under certain circumstances. As an example, your Home Inspector may not discover leaks that occur only during certain weather conditions or when a specific tap or appliance is being used in everyday life.</p>
+<p>Home Inspectors will not find conditions that may only be visible when storage or furniture is moved. They do not remove wall coverings (including wallpaper) or lift flooring (including carpet) or move storage to look underneath or behind.</p>
+
+<b>3) THE INSPECTION DOES NOT INCLUDE HAZARDOUS MATERIALS.</b>
+<p>This includes building materials that are now suspected of posing a risk to health such as phenol-formaldehyde and urea-formaldehyde based insulation, fiberglass insulation and vermiculite insulation. The Inspector does not identify asbestos roofing, siding, wall, ceiling or floor finishes, insulation or fireproofing. We do not look for lead or other toxic metals in such things as pipes, paint or window coverings.</p>
+<p>The Inspection does not deal with environmental hazards such as the past use of insecticides, fungicides, herbicides or pesticides. The Home Inspector does not look for, or comment on, the past use of chemical termite treatments in or around the property.</p>
+
+<b>4) WE DO NOT COMMENT ON THE QUALITY OF AIR IN A BUILDING.</b>
+
+<p>The Inspector does not try to determine if there are irritants, pollutants, contaminants, or toxic materials in or around the building.</p>
+<p>The Inspection does not include spores, fungus, mold or mildew that may be present. You should note that whenever there is water damage noted in the report, there is a possibility that mold or mildew may be present, unseen behind a wall, floor or ceiling.</p>
+<p>If anyone in your home suffers from allergies or heightened sensitivity to quality of air, we strongly recommend that you consult a qualified Environmental Consultant who can test for toxic materials, mold and allergens at additional cost.</p>
+
+<b>5) WE DON'T LOOK FOR BURIED TANKS.</b>
+<p>Your Home Inspector does not look for and is not responsible for fuel oil, septic or gasoline tanks that may be buried on the property. If the building had its heating system converted from oil, there will always be the possibility that a tank may remain buried on the property.</p>
+<p>If fuel oil or other storage tanks remain on the property, you may be responsible for their removal and the safe disposal of any contaminated soil. If you suspect there is a buried tank, we strongly recommend that you retain a qualified Environmental Consultant to determine whether this is a potential problem.</p>
+
+<b>6) TIME TO INVESTIGATE</b>
+<p>We will have no liability for any claim or complaint if conditions have been disturbed, altered, repaired, replaced or otherwise changed before we have had a reasonable period of time to investigate.</p>
+
+<b>7) REPORT IS FOR OUR CLIENT, CLIENT ALSO AGREES FOR THE INSPECTION HOUSE TO RELEASE THE REPORT TO THE REALTOR WORKING WITH OR REPRESENTING THE CLIENT, THIS REPRESENTATION INCLUDES WRITTEN REPRESENTATION BUYER/SELLER AGREEMENT OR VERBAL/IMPLIED REPRESENTATION.</b>
+
+<p>No use of the information by any other party is intended. </p>
+
+<b>8) CANCELLATION FEE</b>
+<p>If the inspection is cancelled within 24 hours of the appointment time, a cancellation fee of 50% of the inspection fee will apply.</p>
+
+<b>9) NOT A GUARANTEE, WARRANTY OR INSURANCE POLICY.</b>
+<p>The inspection is not a guarantee, warranty or an insurance policy with regard to the fitness of the property.</p>
+
+<b>10) LIMIT OF LIABILITY / LIQUIDATED DAMAGES</b>
+<b>11) CLIENT AUTHORIZES CONTACT CONCERNING SECURITY SERVICES</b>
+<b>12) CLIENT AGREES THAT ACCEPTANCE OF THE CONTRACT IS ACCEPTANCE OF WORK COMPLETED, AND AGREES TO RENDER PAYMENT IN FULL, AND AGREES TO NOT CHARGEBACK. CLIENT ASSUMES ALL COSTS AND FEES INCLUDING ANY FEES FROM THE PROCESSING COMPANY AND ANY LEGAL FEES INCUREED.</b>
+<p>The liability of the Home Inspector and the Home Inspection Company arising out of this Inspection and Report, for any cause of action whatsoever, whether in contract or in negligence is limited to refund of the fees that you have been charged for the inspection.</p>
+<p>I hearby accept the terms and conditions of this agreement.</p> 
+<div class="agreebox">
+    <span style="text-align: center;"><b>{{item.firstName}} {{item.lastName}}</b></span><br />
+    <span>This agreement has been digitally accepted</span><br />
+    <span>{{signdatetime}}</span>
+</div>
+      </div>
+      </div>
+    </div>
+
+    <!--<div style="text-align: center;" class="no-printme">
+      <button (click)="printThisPage()" class="printbut">Print This Page</button>
+    </div>-->
+  </div>
+
+
+  <ng-template #showinvoice let-modal>
+    
+    
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body" id="invoiceData">
+              <div class="container-fluid d-flex justify-content-between">
+                <div class="col-lg-3 ps-0">                 
+                  <p class="mt-1 mb-1"><img src="assets/images/others/Logo.png" width="250px;"></p>
+                  <p>Client: {{item.firstName}} {{item.lastName}}</p>
+                  <h5 class="mt-5 mb-2 text-muted">For inspection at: :</h5>
+                  <p>{{item.address}}</p>
+                </div>
+                <div class="col-lg-3 pe-0">
+                  <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">invoice</h4>
+                  <h6 class="text-end mb-5 pb-4"># INV-{{item.id}}</h6>
+                  <h4 class="text-end fw-normal">$ {{item.packagePrice}}</h4>
+                  <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Invoice Date :</span> {{item.inspectionDate}}</h6>
+                </div>
+              </div>
+              <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+                <div class="table-responsive w-100">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Description</th>
+                            <th class="text-end">Quantity</th>
+                            <th class="text-end">Unit cost</th>
+                            <th class="text-end">Total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="text-end">
+                          <td class="text-start">1</td>
+                          <td class="text-start">Home Inspection {{item.squareFeet}}sq ft.</td>
+                          <td>01</td>
+                          <td>${{item.packagePrice}}</td>
+                          <td>${{item.packagePrice}}</td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div class="container-fluid mt-5 w-100">
+                <div class="row">
+                  <div class="col-md-6 ms-auto">
+                      <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td class="text-end"><b>Total :</b><b> ${{item.packagePrice}}</b></td>
+                              </tr>
+                              
+                            </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <div class="modal-footer" style="border: none; display: block; text-align: center;">
+      <button type="button" style="background: #1C315F; border:none;" (click)="downloadInvoice()" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+        Download Invoice
+      </button>
+    </div>
+  
+  </ng-template>
+  

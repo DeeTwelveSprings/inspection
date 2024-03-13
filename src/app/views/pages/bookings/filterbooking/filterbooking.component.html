@@ -1,0 +1,285 @@
+
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink=".">Bookings</a></li>
+      <li class="breadcrumb-item"><a routerLink="/bookings/calendar">Calendar</a></li>
+    </ol>
+  </nav>
+    
+    
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+              <h4 class="card-title mb-3 mb-md-0">List of all Bookings</h4>
+            </div>
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+              <button type="button" style="background: #1C315F; border:none;"  routerLink="/bookings/add" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                Add Booking
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 stretch-card">
+      <div class="card">
+        <div class="card-body">
+          
+            <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-2" style="display: flex; align-items:center;width: 11%;"><b>Select Month :</b></div>
+            <div class="col-md-2">
+              <select name="sel_month" [(ngModel)]="currentMonth" [ngModelOptions]="{standalone: true}" class="form-control">
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div class="col-md-2" style="display: flex; align-items:center;width: 11%;"><b>Select Year :</b></div>
+            <div class="col-md-2">
+              <select name="sel_month" id="sel_month" [(ngModel)]="currentYear" [ngModelOptions]="{standalone: true}" class="form-control">
+                <option [value]="rt" *ngFor="let rt of allyear; index as i">{{rt}}</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <input type="button" (click)="filterMonth()" class="btn btn-primary btn-icon-text mb-2 mb-md-0" style="border:none;background-color: #1C315F;" value="Search" />
+            </div>
+            </div>
+            <!--<h6 class="card-title">Data Table</h6>-->
+
+            <div class="row">
+            <div class="col-md-8">
+                
+            </div>
+            <div class="col-md-2" style="text-align: right; display: flex; align-items: center; width: 8%;">
+                <b>Search :</b> 
+            </div>
+            <div class="col-md-3">
+                <input type="text" (keydown.enter)="mainsearch()" [(ngModel)]="searchText" name="searchStr" class="form-control" />
+            </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-c">
+                    <thead>
+                        <tr>
+                            <th>Action</th>
+                            <th><a class="dataTable-sorter" [class.active]="order === 'firstName'" (click)="setOrder('firstName')">Full Name</a></th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th><a class="dataTable-sorter" [class.active]="order === 'inspectionDate'" (click)="setOrder('inspectionDate')">Inspection Date/Time</a></th>
+                            <th>Package Name</th>
+                            <th>Package Price</th>
+                            <th>Inspector Name</th>
+                            <th><a class="dataTable-sorter" [class.active]="order === 'paymentStatus'" (click)="setOrder('paymentStatus')">Payment Status</a></th>
+                            <th>Agreement</th>
+                            <th><a class="dataTable-sorter" [class.active]="order === 'bookingType'" (click)="setOrder('bookingType')">Booking Type</a></th>
+                            <th><a class="dataTable-sorter" [class.active]="order === 'status'" (click)="setOrder('status')">Status</a></th>
+                            <th>Created At</th>              
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="!this.isLoading">
+                    <tr *ngFor="let item of alldata | paginate : pagingConfig; odd as isOdd; even as isEven;" [ngClass]="{ 'odd': isOdd, 'even': isEven }">
+                        <td><a [routerLink]="'/bookings/update/'+item[0]" title="View Booking"><i class="feather icon-eye"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a (click)="openReassingBox(item[0])" title='Re-Assign Inspector / Reschedule Booking'><i class='feather icon-user'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span style='cursor: pointer;' (click)="openCancelBox(item[0])" title='Cancel Booking'><i class='feather icon-delete'></i></span>&nbsp;&nbsp;&nbsp;&nbsp;<a (click)="openSendMail(item[0])"  style='cursor: pointer;' title='Resend Email'><i class='feather icon-mail'></i></a></td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td [innerHTML]="item[3]"></td>
+                        <td [innerHTML]="item[4]"></td>
+                        <td>{{item[5]}}</td>
+                        <td>{{item[6]}}</td>
+                        <td>{{item[7]}}</td>
+                        <td>{{item[8]}}</td>
+                        <td>{{item[9]}}</td>
+                        <td [innerHTML]="item[10]"></td>
+                        <td>{{item[11]}}</td>
+                        <td>{{item[12]}}</td>
+                        <td>{{item[13]}}</td>
+                    </tr>
+                    <tr *ngIf="(bookingData).length === 0">
+                        <td colspan="13">
+                        <span class="error">No Record Found!!</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row mt-3" *ngIf="this.pagingConfig.totalItems > 0">
+                <div class="col-md-12 text-end">
+                    <div class="no-of-row text-end me-2">
+                        <label class="control-label no-og-lbl" for="noOfRows">Total Rows: </label>
+                        <span class="form-select-sm" style="padding-left: 0px; margin-right: 10px;"><b>{{this.pagingConfig.totalItems}}</b></span>
+                    </div>
+                    <div class="no-of-row text-end me-2">
+                        <label class="control-label no-og-lbl" for="noOfRows">No. of Rows</label>
+                        <select name="noOfRows" (change)="onTableSizeChange($event)" class="form-select form-select-sm">
+                            <option *ngFor="let size of tableSize" [ngValue]="size">{{ size }}</option>
+                        </select>
+                    </div>
+                    <div class="pageing">
+                        <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+
+
+         
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
+  <ng-template #basicModal let-modal>
+    <form [formGroup]="formGroup">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Re-Assign Inspector / Reschedule Booking</h5>  
+        <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="input-group">
+            <select formControlName="type" (change)="changeType($event)" [(ngModel)]="item.type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" class="form-select">
+              <option [ngValue]="undefined" selected>-- Select --</option>
+              <option  value="Reschedule">Reschedule Booking</option>
+              <option  value="Reassign">Reassign Inspector</option>
+            </select>
+            <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+              <div *ngIf="f.type.errors.required">Type is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="item.type == 'Reassign'" style="margin-top:20px;"> 
+          <div class="input-group">
+            <select formControlName="inspectorId"  [(ngModel)]="item.inspectorId" [ngClass]="{ 'is-invalid': submitted && f.inspectorId.errors }" class="form-select">
+              <option [ngValue]="undefined" selected>-- Select --</option>
+              <option *ngFor="let data of inspectorData" [value]="data.inspector_id">{{data.inspectorFirstName}}</option>
+            </select>
+            <div *ngIf="submitted && f.inspectorId.errors" class="invalid-feedback">
+              <div *ngIf="f.inspectorId.errors.required">Inspector is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="item.type == 'Reschedule'" style="margin-top: 20px;">
+          <div class="input-group" style="margin-bottom: 20px;">
+            <input type="text" formControlName="inspectionNewDate" [minDate]="minDate" (dateSelect)="changeDate($event)" ngbDatepicker #d1="ngbDatepicker" [(ngModel)]="inspectionNewDate" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewDate.errors }" class="form-control" placeholder="Enter Date">
+            <button class="input-group-text" type="button" (click)="d1.toggle()">
+              <i class="feather icon-calendar icon-md text-muted"></i>
+            </button>
+            <div *ngIf="submitted && f.inspectionNewDate.errors" class="invalid-feedback">
+              <div *ngIf="f.inspectionNewDate.errors.required">Inspection Date is required</div>
+            </div>
+          </div>
+          <div class="input-group" style="margin-bottom: 20px;">
+            <select formControlName="inspectionNewTime" [(ngModel)]="item.inspectionNewTime" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewTime.errors }" class="form-select">
+              <option [ngValue]="undefined" selected>-- Select Inspection Time--</option>
+              <option value="08:00:00">8 am</option>
+              <option value="08:30:00">8:30 am</option>
+              <option value="09:00:00">9 am</option>
+              <option value="09:30:00">9:30 am</option>
+              <option value="10:00:00">10 am</option>
+              <option value="10:30:00">10:30 am</option>
+              <option value="11:00:00">11 am</option>
+              <option value="11:30:00">11:30 am</option>
+              <option value="12:00:00">12 pm</option>
+              <option value="12:30:00">12:30 pm</option>
+              <option value="13:00:00">01 pm</option>
+              <option value="13:30:00">01:30 pm</option>
+              <option value="14:00:00">02 pm</option>
+              <option value="14:30:00">02:30 pm</option>
+              <option value="15:00:00">03 pm</option>
+              <option value="15:30:00">03:30 pm</option>
+              <option value="16:00:00">04 pm</option>
+              <option value="16:30:00">04:30 pm</option>
+              <option value="17:00:00">05 pm</option>
+              <option value="17:30:00">05:30 pm</option>
+              <option value="18:00:00">06 pm</option>
+              <option value="18:30:00">06:30 pm</option>
+              <option value="19:00:00">07 pm</option>
+              <option value="19:30:00">07:30 pm</option>
+              <option value="20:00:00">08 pm</option>
+            </select>
+            <div *ngIf="submitted && f.inspectionNewTime.errors" class="invalid-feedback">
+              <div *ngIf="f.inspectionNewTime.errors.required">Inspection Time is required</div>
+            </div>
+          </div>
+          <div class="input-group">  
+            <select formControlName="inspectionNewDuration"  (change)="changeDurationNew($event)" [(ngModel)]="item.inspectionNewDuration" [ngClass]="{ 'is-invalid': submitted && f.inspectionNewDuration.errors }" class="form-select">
+                <option [ngValue]="undefined" selected>-- Select Duration --</option>
+                <option value="1:0">1 Hour</option>
+                <option value="1:30">1.5 Hour</option>
+                <option value="2:0">2 Hour</option>
+                <option value="2:30">2.5 Hour</option>
+                <option value="3:0">3 Hour</option>
+                <option value="3:30">3.5 Hour</option>
+                <option value="4:0">4 Hour</option>
+                <option value="4:30">4.5 Hour</option>
+                <option value="5:0">5 Hour</option>
+            </select>
+            <div *ngIf="submitted && f.inspectionNewDuration.errors" class="invalid-feedback">
+              <div *ngIf="f.inspectionNewDuration.errors.required">Duration is required</div>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closePopup()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="reassignSave($event)">Save changes</button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  
+  
+  <ng-template #deleteModal let-modal>
+      
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Confirm Cancel Booking</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <p style="text-align: center;">Are you sure you want to cancel this Booking?</p>
+      </div>
+      
+      <div class="modal-footer" style="border: none; display: block; text-align: center;">
+        <button type="button" class="btn btn-secondary" (click)="closePopup()">No</button>
+        <button type="button" class="btn btn-primary" (click)="cancelBooking(cancelId)">Yes</button>
+      </div>
+    </div>
+  
+  </ng-template>
+  
+  <ng-template #emailModal let-modal>
+      
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Send Payment Link Email</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <p style="text-align: center;">Are you sure you want to resend email for this booking?</p>
+      </div>
+      
+      <div class="modal-footer" style="border: none; display: block; text-align: center;">
+        <button type="button" class="btn btn-secondary" (click)="closePopup()">No</button>
+        <button type="button" class="btn btn-primary" (click)="sendEmail(sendEmailId)">Yes</button>
+      </div>
+    </div>
+  
+  </ng-template>

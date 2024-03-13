@@ -1,0 +1,208 @@
+<nav class="page-breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/inspectors">Inspectors</a></li>
+        <li class="breadcrumb-item active" aria-current="page">View Details</li>
+    </ol>
+</nav>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <!--<h6 class="card-title">Form Grid</h6>-->
+        
+        <div style="text-align: right;">
+            <button type="button" (click)="goback()" class="btn btn-primary btn-icon-text mb-2 mb-md-0" style="background: #1C315F; border: none;"> Back </button>
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-6">
+                <label class="form-label">Reason For Inspection</label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.inspectionReason}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Phase Type</label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.inspectionSubType}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Address</label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-home"></i></span>
+                    <input type="text" value="{{item.address}}"  class="form-control" disabled>
+                </div>
+            </div>
+            
+        
+            <div class="col-sm-6">
+                <label class="form-label">Unit </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.unit}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">City </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.city}}"  class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label">State </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.state}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Zipcode </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.zipcode}}"  class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label">Square Footage </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.squareFootage}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Year Built </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.yearBuilt}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Foundation </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.foundation}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">First Name </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.firstName}}"  class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label">Last Name </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.lastName}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Phone </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                    <input type="text" value="{{item.phone}}"  class="form-control" disabled>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label">Email <span style="color:red;">*</span></label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                  <input type="text" value="{{item.email}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">CC Email </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                    <input type="text" value="{{item.ccemail}}"  class="form-control" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <span style="font-size: 14px; text-decoration: underline; margin-bottom: 10px;"><b>Secondary Contact</b></span>
+            <div class="col-sm-6">
+                <label class="form-label">Secondary Full Name </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.secondaryFullName}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Secondary Phone </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                    <input type="text" value="{{item.secondaryPhone}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Secondary Email </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                    <input type="text" value="{{item.secondaryEmail}}"  class="form-control" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <span style="font-size: 14px; text-decoration: underline; margin-bottom: 10px;"><b>Transaction Coordinator</b></span>
+            <div class="col-sm-6">
+                <label class="form-label">Transaction Coordinator Name </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.transFullName}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Transaction Coordinator Phone </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                    <input type="text" value="{{item.transPhone}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Transaction Coordinator Email </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                    <input type="text" value="{{item.transEmail}}"  class="form-control" disabled>
+                </div>
+            </div>
+
+            
+        </div>
+        <div class="row">
+            <span style="font-size: 14px; text-decoration: underline; margin-bottom: 10px;"><b>Agent Details</b></span>
+            <div class="col-sm-6">
+                <label class="form-label">Agent Type </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.agentType}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Agent Name </label>
+                <div class="input-group mb-3">
+                    <input type="text" value="{{item.agentName}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Agent Phone </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-phone"></i></span>
+                    <input type="text" value="{{item.agentPhone}}"  class="form-control" disabled>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label">Agent Email </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="feather icon-mail"></i></span>
+                    <input type="text" value="{{item.agentEmail}}"  class="form-control" disabled>
+                </div>
+            </div>
+            
+        
+        </div>
+       
+          
+          
+          
+          
+        
+      </div>
+      </div>
+    </div>
+  </div>

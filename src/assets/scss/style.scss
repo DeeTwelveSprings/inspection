@@ -1,0 +1,190 @@
+/*
+* NobleUI - Angular Admin Dashboard Template v2.1.0
+* Copyright © 2022 NobleUI
+* Licensed under ThemeForest License
+*/
+
+// Theme style for demo1 (Vertical-Menu-Light & Vertical-Menu-Light-RTL)
+
+
+// Custom variables
+@import './variables';
+
+
+// Bootstrap stylesheets
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+// Bootstrap layout & components
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+
+// Bootstrap helpers
+@import "bootstrap/scss/helpers";
+
+// Bootstrap utilities
+@import './utilities';
+@import "bootstrap/scss/utilities/api";
+
+
+// Custom mixins
+@import './mixins/animation';
+@import './mixins/buttons';
+@import './mixins/misc';
+@import './mixins/width';
+
+
+// Core styles
+@import './background';
+@import './reset';
+@import './functions';
+@import './misc';
+@import './helpers';
+@import './typography';
+@import './demo';
+@import './spinner';
+
+// Layout
+@import './vertical-wrapper';
+@import './navbar';
+@import './sidebar';
+@import './layouts';
+
+// components
+@import "./components/badges";
+@import "./components/bootstrap-alert";
+@import "./components/breadcrumbs";
+@import "./components/buttons";
+@import "./components/cards";
+@import "./components/datepicker";
+@import "./components/dropdown";
+@import "./components/forms";
+@import "./components/icons";
+@import "./components/nav";
+@import "./components/pagination";
+@import "./components/rating";
+@import "./components/tables";
+
+// Pages
+@import "./components/dashboard";
+@import "./components/timeline";
+@import "./components/auth";
+@import "./components/chat";
+
+// Email
+@import "./components/email/inbox";
+
+
+// Plugin overrides
+@import "./components/plugin-overrides/full-calendar";
+@import "./components/plugin-overrides/ng-select";
+@import "./components/plugin-overrides/ngx-chips";
+@import "./components/plugin-overrides/ngx-quill";
+@import "./components/plugin-overrides/perfect-scrollbar";
+@import "./components/plugin-overrides/sweet-alert";
+//@import "./components/plugin-overrides/dropzone";
+@import "./components/plugin-overrides/angular-archwizard";
+//@import "./components/plugin-overrides/apex-charts";
+@import "./components/plugin-overrides/data-tables";
+@import "./components/plugin-overrides/ngx-datatable";
+
+
+// Custom scss
+@import "./custom";
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-even {
+     background-color: #e0e3ff;
+}
+.ngx-datatable.bootstrap .datatable-body .datatable-body-row.datatable-row-odd {
+    background-color: #e0f6f6;
+}
+
+.fc-event{height: 40px;}
+.eventbox{border:1px solid #000; padding:3px; background-color: yellow;}
+.eventContract1{color:#000}
+.eventContract2{color:red;}
+.mcontent{width:85%; float:left;}
+.iconcontent{width:10%; float: right;}
+.fc-license-message{display: none;}
+.monthview .fc-datagrid-cell-cushion{text-align: right;}
+
+#contextMenu{
+    position: absolute;
+    width: 200px;
+    z-index: 9999;
+  }
+  #contextMenuOff{
+    position: absolute;
+    width: 200px;
+    z-index: 9999;
+  }
+.search-form .dropdown-menu.show{overflow-y:scroll;height: 400px;}
+
+@media (max-width:768px){
+	.ngb-dp-months {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+  ngb-datepicker {
+    display: block;
+    margin: 15px 0;
+    width: 100%;
+  }
+  .ngb-dp-week {
+    justify-content: space-between;
+  }
+
+  .fc .fc-toolbar.fc-header-toolbar {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .fc .fc-toolbar.fc-header-toolbar .fc-toolbar-chunk:nth-child(1) {  
+    order: 2;
+  }
+
+  .fc .fc-toolbar.fc-header-toolbar .fc-toolbar-chunk:nth-child(2)  { 
+    order: 1;
+    text-align: center;
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .fc .fc-toolbar.fc-header-toolbar .fc-toolbar-chunk:nth-child(3)  { 
+    order: 3;
+  }
+
+  full-calendar.fc-theme-standard .fc-scrollgrid col:nth-child(1)  { width:120px !important }
+  .fc .fc-datagrid-cell-cushion {white-space: normal;}
+
+} /* mobile css */
