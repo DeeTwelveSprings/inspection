@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://api.theinspectionhouse.com',
-  apiUrl: 'http://62.252.239.190:9001',
+  apiUrl: 'https://api.theinspectionhouse.com',
+  //apiUrl: 'http://62.252.239.190:9001',
 };
 
 /*
